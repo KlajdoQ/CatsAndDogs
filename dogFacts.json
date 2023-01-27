@@ -1,0 +1,46 @@
+{
+   "dogFacts" :[
+         {
+             "id": 1,
+             "text": "Dogs are descendants of wolves and have been domesticated for thousands of years."
+         },
+         {
+             "id": 2,
+             "text": "Dogs come in a wide range of sizes, from small toy breeds to large working breeds."
+         },
+         {
+             "id": 3,
+             "text": "Dogs have a keen sense of smell, which is about 1,000 times more sensitive than a human's."
+         },
+         {
+             "id": 4,
+             "text": "Dogs have different coat types, including short hair, long hair, and hairless."
+         },
+         {
+             "id": 5,
+             "text": "Dogs have been trained for various tasks such as hunting, herding, protection, and companionship."
+         },
+         {
+             "id": 6,
+             "text": "Dogs have the ability to understand and respond to human emotions and commands."
+         },
+         {
+             "id": 7,
+             "text": "Dogs have a unique relationship with humans, as they are the only animal that has evolved to read and respond to human emotions."
+         },
+         {
+             "id": 8,
+             "text": "Dogs have been trained to assist people with a variety of tasks, such as guiding the blind, detecting seizures, and sniffing out drugs and explosives."
+         },
+         {
+             "id": 9,
+             "text": "Dogs can be trained to detect cancer, low blood sugar levels in diabetics, and even warn their owners of impending seizures."
+         },
+         {
+            "id": 10,
+            "text": "Dogs have a special bond with their owners, as they release the hormone oxytocin, also known as the 'love hormone', when they interact with them."
+        }
+     ]
+
+}
+
