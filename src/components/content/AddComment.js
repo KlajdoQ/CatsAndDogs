@@ -6,7 +6,8 @@ export default function AddComment({ animal, setAnimals }) {
   const [likeComment, setLikeComment] = useState({});
   const [isLikeClicked, setIsLikeClicked] = useState(false);
   const [showReply, setShowReply] = useState({});
-  const [newReply, setNewReply] = useState("");
+  const [newReply, setNewReply] = useState("")
+
 
   function updateAnimals(e) {
 
@@ -55,6 +56,9 @@ export default function AddComment({ animal, setAnimals }) {
     setnewComment("");
     setshowComment(true);
   }
+
+
+
   function likeComments(index) {
     setLikeComment((prev) => {
       let newLikeComment = { ...prev };
@@ -140,7 +144,7 @@ export default function AddComment({ animal, setAnimals }) {
   return (
     <div>
     <form onSubmit={handleCommentSubmit}>
-      {animal.comments.map((comments, commentIndex) => (
+       {animal.comments.map((comments, commentIndex) => (
         <>
           <li
             className="comments-list"
@@ -151,8 +155,7 @@ export default function AddComment({ animal, setAnimals }) {
             {comments.comment}
           </li>
           <button className="like-reply" onClick={() => likeComments(commentIndex)}>
-            {likeComment[commentIndex] ? "♥" : "♡"}
-            Like
+           {likeComment[commentIndex] ? "♥" : "♡"} {comments.likes} Likes
           </button>
           <button
             className="like-reply"

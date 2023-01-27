@@ -190,6 +190,7 @@ body {
   width:300px;
   padding-left:10px;
   padding-top:5px;
+  outline: none;
 }
 .comment-form {
   display: flex;

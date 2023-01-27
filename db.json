@@ -8,24 +8,21 @@
       "hobbies": "Bella likes walks in the park and playing with other dogs.",
       "comments": [
         {
-          "comment": "adfaf",
+          "comment": "Dogs are descendants of wolves and have been domesticated for thousands of years.",
           "replies": [
             {
-              "reply": "no "
+              "reply": "Yes, that is very true "
             },
             {
-              "reply": "12"
-            },
-            {
-              "reply": "123"
+              "reply": "WOW"
             }
           ],
-          "likes": 19
+          "likes": 21
         },
         {
           "comment": "123",
           "replies": [],
-          "likes": 4
+          "likes": 5
         }
       ],
       "likes": 5
