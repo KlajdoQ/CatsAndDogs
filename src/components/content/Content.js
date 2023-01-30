@@ -2,17 +2,31 @@ import React from 'react'
 import AnimalList from './AnimalList'
 import CatSection from '../cats/CatSection'
 import DogSection from '../dogs/DogSection'
-//import DogNews from '../dogs/DogNews'
+import styled from 'styled-components'
+
+
 
 export default function Content({animals,addLikes, setAnimals}) {
   return (
-    <div className="content-div">
-        <AnimalList 
+    <ContentDiv >
+      
+        <DogSection className='dog-section'/>
+      <AnimalList 
           animals={animals} 
           addLikes={addLikes}
           setAnimals={setAnimals} />
-        <DogSection />
-        <CatSection/>
-    </div>
+        <CatSection className='cat-section'/>
+   
+    </ContentDiv>
   )
 }
+
+const ContentDiv= styled.div 
+`  display:grid;
+grid-template-columns: auto  auto auto;
+margin-top:30px;
+position:relative;
+
+`
+
+

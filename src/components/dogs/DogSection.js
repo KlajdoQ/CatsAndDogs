@@ -1,8 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import DogsHeader from './DogsHeader'
 import DogFact from './DogFact'
-import FeaturedDogHeader from './FeaturedDogHeader'
-import FeaturedDog from './FeaturedDog'
 
 export default function DogFactsList() {
   const [dogFact, setDogFact] = useState([])
@@ -13,17 +11,16 @@ export default function DogFactsList() {
     .then(setDogFact)
   },[])
 return (
-    <div className="dog-facts-div">
-      <DogsHeader />
+    <div className='hide-dog-section'>
+      <DogsHeader className='dog-header'/>
      <ol>
         {
           dogFact.map(fact => (
-            <DogFact fact={fact} key={fact.id}/>
+            <DogFact className='dog-head'fact={fact} key={fact.id}/>
           ))
         }
      </ol>
-     <FeaturedDogHeader />
-     <FeaturedDog/>
     </div>
   )
 }
+

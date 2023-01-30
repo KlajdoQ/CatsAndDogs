@@ -7,12 +7,16 @@ import {
   TwitterIcon,
   WhatsappIcon,
 } from 'react-share';
+import styled from 'styled-components'
+const ShareBtn = styled.div 
+` display: flex;
+align-items: center;`
 
 export default function ShareButton({ animal }) {
   const shareUrl = `http://localhost:3000/animals/${animal.id}`;
   const title = animal.name;
   return (
-    <div className="share-button">
+    <ShareBtn>
       <FacebookShareButton url={shareUrl} quote={title}>
         <FacebookIcon size={32} round={true} />
       </FacebookShareButton>
@@ -22,6 +26,6 @@ export default function ShareButton({ animal }) {
       <WhatsappShareButton url={shareUrl} title={title}>
         <WhatsappIcon size={32} round={true} />
       </WhatsappShareButton>
-    </div>
+    </ShareBtn>
   );
 }

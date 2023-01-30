@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import Animal from './Animal'
+import AnimalDetail from './AnimalDetail'
+import styled from 'styled-components'
+
 
 export default function AnimalList({ animals, addLikes ,setAnimals }) {
   const [displayCount, setDisplayCount] = useState(5)
@@ -7,10 +9,9 @@ export default function AnimalList({ animals, addLikes ,setAnimals }) {
   const allanimals = animals
     .slice(0, displayCount)
     .map((animal) => (
-      <Animal 
+      <AnimalDetail 
         animal={animal}
         key={animal.id}
-        className="animal-list"
         addLikes={addLikes}
         setAnimals={setAnimals}
       />
@@ -21,15 +22,35 @@ export default function AnimalList({ animals, addLikes ,setAnimals }) {
   }
 
   return (
-    <div className="animal-list">
+    <ListOfAnimals>
       <>
         {allanimals}
-        <div className="add-more-div">
-          <button className="addMoreBtn" onClick={showMore}>
+        <AddMoreDiv>
+          <AddMoreBtn onClick={showMore}>
             Show More
-          </button>
-        </div>
+          </AddMoreBtn>
+        </AddMoreDiv>
       </>
-    </div>
+    </ListOfAnimals>
   )
 }
+
+const ListOfAnimals = styled.div 
+`display:flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;`
+
+const AddMoreDiv = styled.div 
+`  margin-bottom:30px;
+display: flex;
+align-items: center;
+justify-content: center;`
+
+const AddMoreBtn = styled.div 
+`padding:5px 15px;
+border:none;
+font-weight: 600;
+background-color:lightgray;
+border-radius:5px;
+cursor:pointer;`

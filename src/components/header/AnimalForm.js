@@ -38,7 +38,7 @@ export default function AnimalForm({addNewAnimal}) {
  
   return (
     <>
-    <button onClick={handleShow} variant="primary" className="addBtn" type="text" ><span className="plus">+</span>New Pet</button>
+    <button onClick={handleShow} variant="primary" className="nav-links" type="text" ><span className="plus">+</span><span className='new-pet'>New Pet</span></button>
 
     <Modal
         show={show}

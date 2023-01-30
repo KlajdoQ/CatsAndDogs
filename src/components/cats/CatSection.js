@@ -1,8 +1,20 @@
 import React, {useState, useEffect} from 'react'
 import CatFact from './CatFact'
 import CatsHeader from './CatsHeader'
-import FeaturedCat from './FeaturedCat'
-import FeaturedHeader from './FeaturedHeader'
+import styled from 'styled-components'
+
+const Wrapper = styled.div`
+  width: 350px;
+  height: 430px;
+  @media (max-width:600px) {
+    display:none;
+  }
+`
+
+const List = styled.ol`
+  display: flex;
+  flex-direction: column;
+`
 
 export default function CatFactsList() {
   const [facts, setFacts] = useState([])
@@ -17,17 +29,13 @@ export default function CatFactsList() {
 
 
   return ( 
-    <div className="cats">
+    <Wrapper>
       <CatsHeader />
-      <ol className="cat-fact-list" >
-          {
-            facts.map(fact => (
-              <CatFact key={fact.text} fact={fact}/>
-            ))
-          }
-      </ol>
-      <FeaturedHeader />
-      <FeaturedCat />
-    </div>
+      <List>
+        {facts.map(fact => (
+          <CatFact key={fact.text} fact={fact}/>
+        ))}
+      </List>
+    </Wrapper>
   )
 }

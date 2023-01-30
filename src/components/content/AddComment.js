@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import CommentAndReplyForm from './CommentAndReplyForm'
 
 export default function AddComment({ animal, setAnimals }) {
   const [newComment, setnewComment] = useState("");
@@ -9,8 +10,7 @@ export default function AddComment({ animal, setAnimals }) {
   const [newReply, setNewReply] = useState("")
 
 
-  function updateAnimals(e) {
-
+  function updateAnimals() {
     if (newComment) {
       fetch(`http://localhost:3000/animals/${animal.id}`, {
         method: "PATCH",
@@ -142,66 +142,20 @@ export default function AddComment({ animal, setAnimals }) {
   }
 
   return (
-    <div>
-    <form onSubmit={handleCommentSubmit}>
-       {animal.comments.map((comments, commentIndex) => (
-        <>
-          <li
-            className="comments-list"
-            key={commentIndex}
-            animal={animal}
-            setAnimals={setAnimals}
-          >
-            {comments.comment}
-          </li>
-          <button className="like-reply" onClick={() => likeComments(commentIndex)}>
-           {likeComment[commentIndex] ? "♥" : "♡"} {comments.likes} Likes
-          </button>
-          <button
-            className="like-reply"
-            onClick={(e) => showCommentReplies(commentIndex)}
-          >
-             ↳ Reply
-          </button>
-          <ul className="ul-replies">
-            {comments.replies.map((reply, replyIndex) => (
-              <li key={replyIndex} className="replies">{reply.reply}</li>
-            ))}
-          </ul>
-          {showReply[commentIndex] ? (
-            <div className="comment-form">
-              <textarea
-                type="text"
-                value={newReply}
-                onChange={handleReplyChange}
-                placeholder="Write a reply..."
-                className="type-reply"
-              />
-              <button
-                className="post-comment-btn replyBtn"
-                type="submit"
-                onClick={(e) => handleReplySubmit(e,commentIndex)}
-              >
-                Reply
-              </button>
-            </div>
-          ) : null}
-        </>
-      ))}
-      {showComment && <li className="new-reply-li">{newComment}</li>}
-      <div className="comment-form">
-        <textarea
-          type="text"
-          value={newComment}
-          onChange={handleCommentChange}
-          placeholder="Write a comment..."
-          className="type-comment"
-          />
-        <button className="post-comment-btn" type="submit">
-          Post
-        </button>
-      </div>
-    </form>
-  </div>
+    <CommentAndReplyForm 
+      handleCommentSubmit={handleCommentSubmit}
+      animal={animal}
+      setAnimals={setAnimals}
+      likeComments={likeComments}
+      likeComment={likeComment}
+      showCommentReplies={showCommentReplies}
+      showReply={showReply}
+      newReply={newReply}
+      handleReplyChange={handleReplyChange}
+      newComment={newComment}
+      handleCommentChange={handleCommentChange}
+      handleReplySubmit={handleReplySubmit}
+      showComment={showComment}
+    />
   );
 }

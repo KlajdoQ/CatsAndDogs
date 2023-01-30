@@ -1,4 +1,38 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const SearchBarDiv = styled.div`
+  margin-top:50px;
+  height:110px;
+  @media (max-width:600px) {
+    width:350px;
+  }
+  `;
+  
+  const SearchLabel = styled.label`
+  font-size:25px;
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-family: "Roboto";
+  font-weight: bold;
+  `;
+  
+  const SearchBox = styled.input`
+  height:42px;
+  min-width:400px;
+  max-width: 200px;
+  border:1px solid lightgrey;
+  font-size:20px;
+  opacity:0.8;
+  outline:none;
+  padding-left:20px;
+  margin-top:8px;
+  @media (max-width:600px) {
+    margin-top:40px;
+  }
+`;
 
 export default function SearchBar({ search, setSearch }) {
   
@@ -8,20 +42,15 @@ export default function SearchBar({ search, setSearch }) {
   }
 
   return (
-    <div className="search-div">
-          <div className="search-bar">
-            <label className="search-label">
-                <input
-                type="text"
-                value={search}
-                onChange={handleChange}
-                placeholder="Search by name or breed ..."
-                className="search-box"
-                />
-            </label>
-    </div>
-
-    </div>
-)
+    <SearchBarDiv>
+      <SearchLabel>
+        <SearchBox
+          type="text"
+          value={search}
+          onChange={handleChange}
+          placeholder="Search by name or breed ..."
+        />
+      </SearchLabel>
+    </SearchBarDiv>
+  )
 }
-

@@ -17,12 +17,17 @@
               "reply": "WOW"
             }
           ],
-          "likes": 21
+          "likes": 22
         },
         {
           "comment": "123",
           "replies": [],
-          "likes": 5
+          "likes": 7
+        },
+        {
+          "comment": "beautiful!",
+          "replies": [],
+          "likes": 0
         }
       ],
       "likes": 5

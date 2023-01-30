@@ -3,47 +3,33 @@ body {
   margin: 0;
   font-family: 'Roboto', 'Oxygen','Ubuntu', sans-serif;
 }
-
-.header-div {
-  background-color: rgb(230, 117, 64);
+.nav-link{
   color:white;
-  height:80px;
+  text-decoration: none;
+  margin-right:30px;
+}
+
+@media only screen and (max-width: 600px) {
+ .hide-dog-section {
+  display: none;
+ }
+ .nav-links span{
   display:flex;
-  align-items: center;
-  justify-content: left;
-  position: relative;
-}
-.logo{
-  width:140px;
-}
-                   /* Search Bar */
-.search-bar {
-  margin-top:50px;
-  height:110px;
-}
-.search-label{
-  font-size:25px;
-  display:flex;
-  flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-family: "Roboto";
-  font-weight: bold;
+  font-size:35px;
+  padding-bottom:10px;
+  width:50px;
+  height:45px;
+ }
+ .nav-links .new-pet {
+  display: none;
+ }
+ .nav-links {
+  width:60px;
+ }
 }
-.search-box {
-  height:42px;
-  min-width:400px;
-  max-width: 200px;
-  border:1px solid lightgrey;
-  font-size:20px;
-  opacity:0.8;
-  outline:none;
-  padding-left:20px;
-  margin-top:8px;
-}
-
-
-                                  /*=== Form ===*/
+                                  /*=== Animal Form ===*/
 .form-input {
   font-family:"Roboto",sans-serif;
   margin-top:20px;
@@ -91,100 +77,18 @@ body {
   font-size:20px;
   margin-right:5px;
 }
-.addBtn {
+.nav-links {
   margin:20px;
   border:none;
   border-radius:5px;
-  position:absolute;
-  right:10px;
   font-size:20px;
   background-color: rgb(193, 49, 49);
   color:white;
-  padding:7px 10px;
-}
-                        /*===Animals ===*/
-.animal-list {
-  display:flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.animal-div {
-  margin:30px;
-  border:1px solid rgb(233, 227, 227);
-  width:450px;
-  border-radius:10px;
-  overflow: hidden;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
-  padding-bottom:20px;
-  position:relative;
-}
-.animal-image {
-  width:100%;
-  height:290px;
-}
-.animal-name {
-  padding-left:20px;
-  padding-top:10px;
-  color:rgb(224, 110, 182)
+  text-decoration: none;
+  height:45px;
 }
 
-.animal-facts {
-  padding-left: 20px;
-  font-family: "Roboto", "Helvetica Neue",
-}
-.animal-likes {
-  text-align: center;
-  border:2px solid rgb(150, 144, 144);
-  padding:3px 5px;
-  border-radius:5px;
-  font-weight: bold;
-}
 
-.paw-img {
-  width:20px;
-  margin-right:3px;
-}
-.line-div {
-  display:flex;
-  align-items: center;
-  justify-content: center;
-  margin-top:10px;
-}
-.line {
-  border:1px solid rgb(221, 217, 217);
-  width:400px;
-  margin-bottom:10px;
-}
-.animal-hobbies {
-  padding-left:20px;
-}
-.animal-breed {
-  font-size: 16px;
-  padding-left: 20px;
-  color:rgb(178, 173, 173);
-}
-                            /*===  COMMENTS ===*/
-.like-comment-share {
-  display:flex;
-  align-items: center;
-  justify-content:space-between;
-  margin:10px;
-}
-
-.animal-comments {
-  text-align: center;
-  background-color: rgb(229, 38, 51);
-  border:1px solid lightgray;
-  padding:3px 5px;
-  color:white;
-  border-radius:5px;
-  font-weight: bold;
-}
-.share-button {
-  display: flex;
-  align-items: center;
-}
 .type-comment {
   margin: 0 30px;
   width:300px;
@@ -192,150 +96,9 @@ body {
   padding-top:5px;
   outline: none;
 }
-.comment-form {
-  display: flex;
-  align-items: center;
-}
-.comments-list {
-  list-style: none;
-  background-color: rgb(243, 243, 243);;
-  height:auto;
-  padding:10px;
-  margin:20px;
-  display:flex;
-  align-items: center;
-  border-radius:10px;
-  margin-bottom:-4px;
-}
-.post-comment-btn {
-  width:70px;
-  height:40px;
-  background-color: rgb(104, 104, 201);
-  color:white;
-  border-radius: 5px;
-  border:none;
-}
 
-.like-reply {
-  border:none;
-  font-size:12px;
-  margin-left:30px;
-  margin-bottom:10px;
-  background-color: white;
-  font-weight: 500;
-
-}
-.type-reply {
-  margin-left:100px;
-  font-size:12px;
-  margin-right:20px;
-  height:30px;
-  width:200px;
-}
 .replyBtn {
-  height:30px;
-  width:50px;
+  height:25px;
+  width:30px;
   font-size:14px;
-}
-.new-reply-li {
-  list-style:none;
-}
-
-                      /*===Replies === */
-.replies {
-  list-style: none;
-  border-radius:20px;
-  padding: 5px 10px;
-  margin:5px;
-  width:350px;
-  margin-left:50px;
-  background-color: rgb(242, 244, 246);
-}
-
-
-                     /* === Content ===*/
-.content-div {
-  display:grid;
-  grid-template-columns: auto  auto auto;
-  margin-top:30px;
-}
-
-                       /* ===Cat section ===*/
-.cat-facts-list {
-  display:flex;
-  flex-direction: column;
-}
-.cats {
-  width:350px;
-  height:430px;
-}
-.cat-fact-div {
-  margin-right:20px;
-  margin-left:20px;
-  margin-bottom:30px;
-}
-.animal-header {
-  background-color: rgb(237, 126, 126);
-  color:white;
-  width:190px;
-  padding:10px;
-  font-weight: bold;
-  font-size: 20px;
-  margin-top:20px;
-  border-radius: 5px;
-  text-align: center;
-  margin-left:80px;
-  margin-bottom:20px;
-}
-.cat-img-div {
-  display:flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  overflow: hidden;
-}
-.cat-img ,
-.dog-img {
-  margin:20px;
-  box-shadow: 5px 5px 5px rgba(80, 96, 214, 0.3);
-  border-radius: 5px;
-}
-                            /*===Dog Section ===*/
-.dog-facts-div {
-  margin-left:20px;
-  margin-right:-60px;
-  height:720px;
-  width:330px;
-}
-.dog-fact {
-  margin:10px;
-}
-
-.dog-img-div {
-  display:flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-.animal-header.dog-header {
-  margin-left:80px;
-}
-.addMoreBtn {
-  padding:5px 15px;
-  border:none;
-  font-weight: 600;
-}
-.add-more-div {
-  margin-bottom:30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-                          /*===Footer===*/
-.footer-div {
-  background-color: rgb(230, 114, 47);
-  height:45px;
-  text-align:center;
-  padding-top:10px;
 }
