@@ -33,13 +33,39 @@
       "likes": 5
     },
     {
+      "image": "https://images.unsplash.com/photo-1583795128727-6ec3642408f8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1657&q=80",
+      "name": "Oscar",
+      "breed": "Thai Bengali ",
+      "hobbies": "Chase other Cats ",
+      "likes": 0,
+      "id": 10
+    },
+    {
       "id": 2,
       "name": "Max",
       "image": "https://www.dogbreedslist.info/uploads/dog-pictures/french-bulldog-2.jpg",
       "breed": "French Bulldog",
       "hobbies": "Max likes baths",
-      "comments": [],
-      "likes": 15
+      "comments": [
+        {
+          "comment": "Puggsy",
+          "replies": [
+            {
+              "reply": "Cute"
+            }
+          ],
+          "likes": 1
+        }
+      ],
+      "likes": 16
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1557246565-8a3d3ab5d7f6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80",
+      "name": "Lucky ",
+      "breed": "Egyptian Mau ",
+      "hobbies": "Toys, string and laser lights, ",
+      "likes": 0,
+      "id": 11
     },
     {
       "id": 3,
@@ -94,6 +120,14 @@
       "comments": [],
       "likes": 0,
       "id": 8
+    },
+    {
+      "image": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/russian-blue-royalty-free-image-1658451809.jpg?crop=0.665xw:1.00xh;0.112xw,0&resize=768:*",
+      "name": "Whiskers",
+      "breed": "Russian Blue ",
+      "hobbies": "Take long naps and look outside of the window for hours. ",
+      "likes": 0,
+      "id": 9
     }
   ]
 }

@@ -5,7 +5,7 @@ import ShareButton from './ShareButton'
 import styled from 'styled-components'
 
 export default function Animal({animal,likeButtonStyle,handleClick,likesFunction,showCom,showComments,setAnimals}) {
-    const{name,image,hobbies,breed,likes} = animal
+    const{name,image,hobbies,breed,likes,comments} = animal
   return (
     <AnimalDiv>
      <AnimalImage src={image} alt={name} />
@@ -23,11 +23,12 @@ export default function Animal({animal,likeButtonStyle,handleClick,likesFunction
       <PawImg src={Paw} alt="paw"/>
           {likes} {likesFunction}
       </AnimalLikes>
-      <AnimalComments 
+      <button
       onClick={showCom}
-      >{animal.comments.length} {animal.comments.length===1? "Comment":"Comments"}
+      className="btn-comments"
+      >{comments && comments.length} {comments && comments.length===1 ? "Comment" : "Comments"}
 
-      </AnimalComments>
+      </button>
       <ShareButton animal={animal}/>
     </LikeCommentShare>
     {showComments? 
@@ -104,15 +105,7 @@ const AnimalLikes = styled.button`
   font-weight: bold;
 `;
 
-const AnimalComments = styled.button`
-  text-align: center;
-  background-color: rgb(229, 38, 51);
-  border: 1px solid lightgray;
-  padding: 3px 5px;
-  color: white;
-  border-radius: 5px;
-  font-weight: bold;
-`;
+
 
 const PawImg = styled.img 
 `width:20px;
