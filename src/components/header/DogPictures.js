@@ -17,6 +17,9 @@ export default function DogPictures() {
   )
 }
 
+/*******************************
+*   STYLED COMPONENTS          *
+*******************************/
 const DogImg = styled.img`width:200px; margin:20px;
 box-shadow: 5px 5px 5px rgba(80, 96, 214, 0.3);
 border-radius: 5px; 

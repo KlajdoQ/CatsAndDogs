@@ -14,8 +14,11 @@ export default function CommentAndReplyForm({handleCommentChange,
     handleReplySubmit, 
     showComment, 
     newComment}) {
+
+  // This component renders a form that allows the user to submit comments and replies   
   return (
     <form onSubmit={handleCommentSubmit}>
+      {/* Map over the comments in the `animal` object and render a `CommentsList` component for each comment */}
       {animal.comments.map((comments, commentIndex) => (
         <>
           <CommentsList
@@ -28,7 +31,8 @@ export default function CommentAndReplyForm({handleCommentChange,
           <LikeReply
             onClick={() => likeComments(commentIndex)}
           >
-            {likeComment[commentIndex] ? "♥" : "♡"} {comments.likes} Likes
+          {/* Display a heart icon depending on whether the comment has been liked */}
+          {likeComment[commentIndex] ? "♥" : "♡"} {comments.likes} Likes
           </LikeReply>
           <LikeReply
             onClick={(e) => showCommentReplies(commentIndex)}
@@ -42,6 +46,7 @@ export default function CommentAndReplyForm({handleCommentChange,
               </Replies>
             ))}
           </ul>
+          {/* If `showReply[commentIndex]` is truthy, render a form for submitting a reply to the comment */}
           {showReply[commentIndex] ? (
             <CommentForm>
               <TypeReply
@@ -61,6 +66,7 @@ export default function CommentAndReplyForm({handleCommentChange,
           ) : null}
         </>
       ))}
+      {/* If `showComment` is truthy and there is text on the textarea, render the new comment */}
       {showComment && <NewReplyLi>{newComment}</NewReplyLi>}
       <div className="comment-form">
         <textarea
@@ -78,8 +84,9 @@ export default function CommentAndReplyForm({handleCommentChange,
   );
 }
 
-
-
+/*******************************
+*   STYLED COMPONENTS          *
+*******************************/
 const CommentsList = styled.li`
   list-style: none;
   background-color: rgb(243, 243, 243);

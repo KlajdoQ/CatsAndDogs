@@ -1,14 +1,28 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto);
+
 body {
   margin: 0;
   font-family: 'Roboto', 'Oxygen','Ubuntu', sans-serif;
 }
+
+/*******************************
+*     NAV LINKS                *
+*******************************/
 .nav-link{
   color:white;
   text-decoration: none;
   margin-right:30px;
 }
-
+.nav-links {
+  margin:20px;
+  border:none;
+  border-radius:5px;
+  font-size:20px;
+  background-color: rgb(193, 49, 49);
+  color:white;
+  text-decoration: none;
+  height:45px;
+}
 @media only screen and (max-width: 600px) {
  .hide-dog-section {
   display: none;
@@ -29,8 +43,9 @@ body {
   width:60px;
  }
 }
-                                  /*=== Animal Form ===*/
-
+/*******************************
+*     ANIMAL FORM              *
+*******************************/
 .btn-comments  {
   text-align: center;
   background-color: rgb(229, 38, 51);
@@ -78,7 +93,6 @@ body {
   margin-left:12px;
   height:40px;
 }
-
 .addPetBtn {
   width:90px;
   height:50px;
@@ -99,14 +113,4 @@ body {
 .plus{
   font-size:20px;
   margin-right:5px;
-}
-.nav-links {
-  margin:20px;
-  border:none;
-  border-radius:5px;
-  font-size:20px;
-  background-color: rgb(193, 49, 49);
-  color:white;
-  text-decoration: none;
-  height:45px;
 }

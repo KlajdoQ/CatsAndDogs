@@ -8,6 +8,10 @@ export default function Footer() {
     </FooterDiv>
   )
 }
+
+/*******************************
+*   STYLED COMPONENTS          *
+*******************************/
 const FooterDiv = styled.div
 `background-color: rgb(230, 114, 47);
 height:45px;

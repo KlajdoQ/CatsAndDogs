@@ -1,6 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
 
+
+export default function SearchBar({ search, setSearch }) {
+  
+  function handleChange(e) {
+    setSearch(e.target.value)
+  }
+
+  return (
+    <SearchBarDiv>
+      <SearchLabel>
+        <SearchBox
+          type="text"
+          value={search}
+          onChange={handleChange}
+          placeholder="Search by name or breed ..."
+        />
+      </SearchLabel>
+    </SearchBarDiv>
+  )
+}
+
+/*******************************
+*   STYLED COMPONENTS          *
+*******************************/
 const SearchBarDiv = styled.div`
   margin-top:50px;
   height:110px;
@@ -33,24 +57,3 @@ const SearchBarDiv = styled.div`
     margin-top:40px;
   }
 `;
-
-export default function SearchBar({ search, setSearch }) {
-  
-
-  function handleChange(e) {
-    setSearch(e.target.value)
-  }
-
-  return (
-    <SearchBarDiv>
-      <SearchLabel>
-        <SearchBox
-          type="text"
-          value={search}
-          onChange={handleChange}
-          placeholder="Search by name or breed ..."
-        />
-      </SearchLabel>
-    </SearchBarDiv>
-  )
-}

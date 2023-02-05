@@ -6,6 +6,10 @@ export default function DogsHeader() {
     <Header>Todays Dog Facts</Header>
   )
 }
+
+/*******************************
+*   STYLED COMPONENTS          *
+*******************************/
 const Header = styled.div 
 ` background-color: rgb(237, 126, 126);
 color:white;

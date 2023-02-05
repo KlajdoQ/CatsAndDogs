@@ -18,6 +18,10 @@ export default function CatPictures() {
     )
   )
 }
+
+/*******************************
+*   STYLED COMPONENTS          *
+*******************************/
 const CatImg = styled.img `width:300px;
 margin:20px;
 box-shadow: 5px 5px 5px rgba(80, 96, 214, 0.3);

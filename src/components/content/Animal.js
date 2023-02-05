@@ -42,6 +42,10 @@ export default function Animal({animal,likeButtonStyle,handleClick,likesFunction
   </AnimalDiv>
   )
 }
+
+/*******************************
+*   STYLED COMPONENTS          *
+*******************************/
 const AnimalDiv = styled.div`
   margin: 30px;
   border: 1px solid rgb(233, 227, 227);
@@ -104,8 +108,6 @@ const AnimalLikes = styled.button`
   border-radius: 5px;
   font-weight: bold;
 `;
-
-
 
 const PawImg = styled.img 
 `width:20px;

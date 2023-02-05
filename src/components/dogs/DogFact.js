@@ -9,6 +9,9 @@ export default function DogFact({fact}) {
   )
 }
 
+/*******************************
+*   STYLED COMPONENTS          *
+*******************************/
 const DogFactLi = styled.div
 ` margin-left:20px;
 margin-right:-60px;

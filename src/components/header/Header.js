@@ -9,19 +9,26 @@ import styled from 'styled-components'
 
 
 export default function Header({addNewAnimal, search, setSearch}) {
+    //Returning the header with links to home and animal pictures and a form to add a new animal
   return (
     <HeaderDiv >
       <Link to='/'><LogoImg src={Logo} alt="logo"/></Link>
       <Search search={search} setSearch={setSearch}/>
-      
         <ClientSideRoute >
+            {/*Link to cat pictures page*/}
             <Link to='/cat-pictures' className='nav-link'><CatImgBtn src={CatImg} alt="cat-img"/>Pictures</Link>
+            {/*Link to dog pictures page*/}
             <Link to='/dog-pictures' className='nav-link'><DogImgBtn src={DogImg} alt='dog-img' />Pictures</Link>
+            {/*Show form to add new animal on click*/}
            <AnimalForm addNewAnimal={addNewAnimal}/>
         </ClientSideRoute>  
     </HeaderDiv>
   )
 }
+
+/*******************************
+*   STYLED COMPONENTS          *
+*******************************/
 const HeaderDiv = styled.div `
   background-color: rgb(230, 117, 64);
   color:white;
@@ -46,7 +53,6 @@ const LogoImg = styled.img`
     left: 0;
   }
 `
-
 const ClientSideRoute = styled.div`
   position:absolute;
   right:10px;
@@ -57,7 +63,6 @@ const ClientSideRoute = styled.div`
     width:260px;
   }
 `
-
 const CatImgBtn = styled.img`
   width:40px;
   @media (max-width:600px) {

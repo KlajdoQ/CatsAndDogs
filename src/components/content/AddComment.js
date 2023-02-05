@@ -2,14 +2,19 @@ import React, { useState } from "react";
 import CommentAndReplyForm from './CommentAndReplyForm'
 
 export default function AddComment({ animal, setAnimals }) {
+    // state to keep track of the new comment being added
   const [newComment, setnewComment] = useState("");
+    // state to determine if the comment form is displayed
   const [showComment, setshowComment] = useState(false);
+    // state to keep track of the like status of a comment
   const [likeComment, setLikeComment] = useState({});
+    // state to determine if a comment has been liked
   const [isLikeClicked, setIsLikeClicked] = useState(false);
+    // state to keep track of the replies to a comment
   const [showReply, setShowReply] = useState({});
   const [newReply, setNewReply] = useState("")
 
-
+  // update the animal state in the parent component with a new comment and also update the backend 
   function updateAnimals() {
     if (newComment) {
       fetch(`http://localhost:3000/animals/${animal.id}`, {
@@ -41,10 +46,12 @@ export default function AddComment({ animal, setAnimals }) {
     handleCommentSubmit();
   }
 
+  // function to handle the change in the comment input
   function handleCommentChange(event) {
     setnewComment(event.target.value);
   }
 
+    // function to submit the comment
   function handleCommentSubmit(e) {
     e.preventDefault();
     if (newComment && !isLikeClicked) {
@@ -57,8 +64,7 @@ export default function AddComment({ animal, setAnimals }) {
     setshowComment(true);
   }
 
-
-
+    // function to like a comment and update the json file 
   function likeComments(index) {
     setLikeComment((prev) => {
       let newLikeComment = { ...prev };
@@ -91,6 +97,7 @@ export default function AddComment({ animal, setAnimals }) {
       });
   }
 
+  // function to show the comments when the comment is clicked 
   function showCommentReplies(commentIndex) {
     setShowReply((prev) => {
       let isCommentShown = { ...prev };
@@ -99,10 +106,12 @@ export default function AddComment({ animal, setAnimals }) {
     });
   }
 
+  //function to assign the state change to the reply 
   function handleReplyChange(e) {
     setNewReply(e.target.value);
   }
 
+    // update the reply state in the parent component with a new reply and also update the backend 
   function handleReplySubmit(e, commentIndex) {
     e.preventDefault();
 

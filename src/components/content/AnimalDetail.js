@@ -1,25 +1,30 @@
 import React,{useState} from 'react'
 import Animal from './Animal'
 
-
+// The AnimalDetail component displays the detailed information about a specific animal
 export default function AnimalDetail({animal, addLikes,setAnimals}) {
     const{likes} = animal
+      // keep track of the like state
     const [isLiked, setIsLiked] = useState(false);
+      // keep track of the show comments state
     const [showComments, setshowComments]= useState(false)
 
 
 function handleClick() {
   let newLikes = animal.likes;
   if (isLiked) {
+          // If the animal is already liked, decrease the number of likes by 1
     newLikes--;
     setIsLiked(false);
    
   } else {
+          // If the animal is not liked, increase the number of likes by 1
     newLikes++;
     setIsLiked(true);
    
   }
 
+    // Use fetch to send a PATCH request to update the animal's likes count
   fetch(`http://localhost:3000/animals/${animal.id}`,{
     method:'PATCH',
     headers: {
@@ -30,9 +35,9 @@ function handleClick() {
   })
   .then(response => response.json())
   .then(addLikes)
-  
 }
 
+  // Determine the correct wording for the likes count (e.g. 1 like or 2 likes)
 function likesFunction() {
   if(likes === 1) {
     return "Like"
@@ -42,9 +47,11 @@ function likesFunction() {
 }
 
 function showCom() {
+      // Toggle the show comments state when clicking on the comment button 
   setshowComments(prev => !prev)
 }
 
+  // Set the styles for the like button based on whether the animal is liked or not
 const likeButtonStyle = {
   backgroundColor: isLiked ? 'red' : 'white',
   color: isLiked ? 'white' : 'red',

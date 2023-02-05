@@ -8,9 +8,7 @@ import {
   WhatsappIcon,
 } from 'react-share';
 import styled from 'styled-components'
-const ShareBtn = styled.div 
-` display: flex;
-align-items: center;`
+
 
 export default function ShareButton({ animal }) {
   const shareUrl = `http://localhost:3000/animals/${animal.id}`;
@@ -29,3 +27,10 @@ export default function ShareButton({ animal }) {
     </ShareBtn>
   );
 }
+
+/*******************************
+*   STYLED COMPONENTS          *
+*******************************/
+const ShareBtn = styled.div 
+` display: flex;
+align-items: center;`
