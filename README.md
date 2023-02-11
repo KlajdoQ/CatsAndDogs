@@ -2,7 +2,6 @@
 
 ## Description
 
-I created this app to recap all most of my knowledge about React.
 It is an app for all pet lovers that want to upload their own pets but also scroll through other posts or pictures of dogs and cats. 
 It is very easy to use since it doesnt require any sign in yet but thats to come in the future. 
 Through this app I learned how to use React components, styled components, how to lift/pass state and also how to solve problems the developers way. 
