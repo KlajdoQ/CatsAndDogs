@@ -2,16 +2,16 @@
 
 ## Description
 
-It is an app for all pet lovers that want to upload their own pets but also scroll through other posts or pictures of dogs and cats. 
-It is very easy to use since it doesnt require any sign in yet but thats to come in the future. 
-Through this app I learned how to use React components, styled components, how to lift/pass state and also how to solve problems the developers way. 
+This is a social media app for all pet lovers that want to post pictures of their own pets. They can like or comment on other posts too. 
+It is very easy to use since it doesnt require any sign in (already working on that)
+
 
 ## Installation
 
-In order to start the app after opening up the code on your favorite editor , you need to start two json servers. 
-- The first command on your terminla is npx json-server --watch db.json 
-- The second command would be npx json-server --watch dogFacts.json (sometimes you need to choose another port so just add --port 4000)
-- npm start to open it on a new page. 
+In order to start the app after opening up the code on your favorite editor , you need to start two servers. 
+- After getting to the rails-backend folder - run rails:db migrate db:seed and rails s to start the server 
+- The second command would be npm start after getting to the react-frontend folder
+
 
 ## Usage
 
@@ -36,5 +36,5 @@ The fourth component is the New Pet button. When clicked it opens a pop up where
 
 ## Credits
 
-Klajdo Qasolli - https://github.com/KlajdoQ/cats-and-dogs
+Klajdo Qasolli - https://github.com/KlajdoQ/PawBook
 
