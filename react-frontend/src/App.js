@@ -37,12 +37,13 @@ function App() {
     // update the likes of an animal
     function addLikes(updatedAnimal) {
       setAnimals(prevAnimals => {
-        const index = prevAnimals.findIndex(animal => animal.id === updatedAnimal.id);
-        return [
-          ...prevAnimals.slice(0, index),
-          updatedAnimal,
-          ...prevAnimals.slice(index + 1),
-        ];
+        return prevAnimals.map(prevAnimal => {
+          if (prevAnimal.id === updatedAnimal.id) {
+            return { ...prevAnimal, likes: updatedAnimal.likes };
+          } else {
+            return prevAnimal;
+          }
+        });
       });
     }
     

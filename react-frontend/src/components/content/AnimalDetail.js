@@ -25,15 +25,6 @@ export default function AnimalDetail({animal, addLikes,setAnimals}) {
         .then(response => response.json())
         .then(data => {
           addLikes(data);
-          setAnimals(prevAnimals => {
-            return prevAnimals.map(prevAnimal => {
-              if (prevAnimal.id === data.id) {
-                return data;
-              } else {
-                return prevAnimal;
-              }
-            });
-          });
         })
         .catch(error => console.log(error));
     }
