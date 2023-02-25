@@ -86,7 +86,7 @@ export default function CommentAndReplyForm({
           </div>
         ))}
       {/* If `showComment` is truthy and there is text on the textarea, render the new comment */}
-      {showComment && <NewReplyLi key="new-comment">{newComment}</NewReplyLi>}
+      {showComment && newComment && <NewReplyLi key="new-comment">{newComment}</NewReplyLi>}
       <div className="comment-form">
         <textarea
           type="text"

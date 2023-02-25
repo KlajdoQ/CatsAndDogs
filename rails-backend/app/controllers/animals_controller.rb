@@ -56,7 +56,6 @@ class AnimalsController < ApplicationController
 
   def animal_params
     params.require(:animal).permit(:name, :species, :breed, :age, :likes, comments_attributes: [:comment, :likes, replies_attributes: [:reply]])
-
   end
   
 end

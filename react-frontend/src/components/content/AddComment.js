@@ -38,6 +38,8 @@ export default function AddComment({ animal, setAnimals }) {
             })
           );
           setnewComment("");
+          setshowComment(true);
+
         })
         .catch((error) => console.error(error));
     }
