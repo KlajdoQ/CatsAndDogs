@@ -7,12 +7,12 @@ export default function AddComment({ animal, setAnimals }) {
   // state to determine if the comment form is displayed
   const [showComment, setshowComment] = useState(false);
   // state to keep track of the like status of a comment
-  const [likeComment, setLikeComment] = useState(Array(animal.comments.length).fill(false));
+  const [likeComment, setLikeComment] = useState(Array(animal.comments.length ?? 0).fill(false));
   // state to determine if a comment has been liked
   const [isLikeClicked, setIsLikeClicked] = useState(false);
   // state to keep track of the replies to a comment
-  const [showReply, setShowReply] = useState({});
-  const [newReply, setNewReply] = useState("");
+  const [showReply, setShowReply] = useState(Array(animal.comments.length).fill(false));
+  const [newReply, setNewReply] = useState(Array(animal.comments.length).fill(""));
 
   // update the animal state in the parent component with a new comment and also update the backend
   function handleCommentSubmit(event) {
@@ -79,13 +79,7 @@ export default function AddComment({ animal, setAnimals }) {
               return currentAnimal;
             }
           })
-        );
-  
-        setShowReply((prev) => {
-          let isCommentShown = { ...prev };
-          isCommentShown[commentIndex] = true;
-          return isCommentShown;
-        });
+        )
       })
       .catch((error) => console.error(error));
   }
@@ -144,7 +138,35 @@ export default function AddComment({ animal, setAnimals }) {
     }
   }
   
+  function handleCommentDelete(commentIndex) {
+    const commentId = animal.comments[commentIndex].id;
+    fetch(`http://localhost:3000/animals/${animal.id}/comments/${commentId}`, {
 
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then(() => {
+        setAnimals((prevAnimals) =>
+          prevAnimals.map((currentAnimal) => {
+            if (currentAnimal.id === animal.id) {
+              return {
+                ...currentAnimal,
+                comments: currentAnimal.comments.filter(
+                  (comment) => comment.id !== commentId
+                ),
+              };
+            } else {
+              return currentAnimal;
+            }
+          })
+        );
+      })
+      .catch((error) => console.error(error));
+  }
+  
   return (
     <CommentAndReplyForm
       handleCommentSubmit={handleCommentSubmit}
@@ -160,6 +182,7 @@ export default function AddComment({ animal, setAnimals }) {
       handleCommentChange={handleCommentChange}
       handleReplySubmit={handleReplySubmit}
       showComment={showComment}
+      handleCommentDelete={handleCommentDelete}
     />
   );
 }

@@ -14,7 +14,7 @@ class AnimalsController < ApplicationController
     def create_comment
       animal = Animal.find(params[:animal_id])
       comment = animal.comments.create(comment_params)
-      render json: comment, include: :comment_likes, status: :created
+      render json: comment.as_json(include: { replies: { } }), status: :created
     end
     
 
@@ -36,6 +36,14 @@ class AnimalsController < ApplicationController
       render json: comment, include: :comment_likes
     end
 
+    def destroy_comment
+      comment = Comment.find(params[:comment_id])
+      comment.replies.destroy_all
+      comment.destroy
+      head :no_content
+    end
+    
+    
     private
 
   def comment_params

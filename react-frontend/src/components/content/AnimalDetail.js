@@ -9,7 +9,6 @@ export default function AnimalDetail({animal, addLikes,setAnimals}) {
       // keep track of the show comments state
     const [showComments, setshowComments]= useState(false)
 
-
     function handleClick() {
       const newLikes = isLiked ? likes - 1 : likes + 1;
       setIsLiked(!isLiked);
@@ -25,20 +24,9 @@ export default function AnimalDetail({animal, addLikes,setAnimals}) {
         .then(response => response.json())
         .then(data => {
           addLikes(data);
-          setAnimals(prevAnimals => {
-            return prevAnimals.map(prevAnimal => {
-              if (prevAnimal.id === data.id) {
-                return data;
-              } else {
-                return prevAnimal;
-              }
-            });
-          });
         })
         .catch(error => console.log(error));
     }
-    
-
   // Determine the correct wording for the likes count (e.g. 1 like or 2 likes)
    function likesFunction() {
     return likes === 1 ? 'Like' : 'Likes';

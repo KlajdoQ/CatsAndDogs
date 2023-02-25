@@ -15,6 +15,7 @@ export default function CommentAndReplyForm({
   handleReplySubmit,
   showComment,
   newComment,
+  handleCommentDelete,
 }) {
   // Generate unique IDs for each comment
   const generateCommentId = (index) => `comment-${index}`;
@@ -24,6 +25,10 @@ export default function CommentAndReplyForm({
     `comment-${commentIndex}-like`;
   const generateCommentReplyId = (commentIndex, replyIndex) =>
     `comment-${commentIndex}-reply-${replyIndex}`;
+
+  function handleDelete(commentIndex) {
+    handleCommentDelete(commentIndex);
+  }
 
   // This component renders a form that allows the user to submit comments and replies
   return (
@@ -45,8 +50,11 @@ export default function CommentAndReplyForm({
             <LikeReply onClick={(e) => showCommentReplies(commentIndex)}>
               ↳ Reply
             </LikeReply>
+            <LikeReply onClick={(e) => handleDelete(commentIndex)}>
+              &#9746; Delete
+            </LikeReply>
             <ul>
-              {Array.isArray(comment.replies) && comment.replies.length > 0
+              {comment.replies && Array.isArray(comment.replies) && comment.replies.length > 0
                 ? comment.replies.map((reply, replyIndex) => (
                     <Replies
                       key={generateCommentReplyId(commentIndex, replyIndex)}
