@@ -33,8 +33,11 @@ export default function CatFactsList() {
 *   STYLED COMPONENTS          *
 *******************************/
 const Wrapper = styled.div`
-  width: 350px;
-  height: 430px;
+  width: 400px;
+  height: 530px;
+  border-radius:10px;
+  margin-left:60px;
+  background-color:white;
   @media (max-width:600px) {
     display:none;
   }

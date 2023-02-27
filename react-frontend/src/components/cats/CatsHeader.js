@@ -12,7 +12,7 @@ font-size: 20px;
 margin-top:20px;
 border-radius: 5px;
 text-align: center;
-margin-left:80px;
+margin-left:100px;
 margin-bottom:20px;`
 
 

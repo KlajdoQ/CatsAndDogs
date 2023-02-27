@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 // Create a styled component for the CatFactDiv
 const CatFactDiv = styled.li`
-  margin-right: 20px;
   margin-left: 20px;
   margin-bottom: 30px;
 `;

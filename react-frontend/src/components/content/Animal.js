@@ -41,7 +41,8 @@ export default function Animal({animal, likeButtonStyle, handleClick, likesFunct
 *   STYLED COMPONENTS          *
 *******************************/
 const AnimalDiv = styled.div`
-  margin: 30px;
+  background-color: white;
+  margin-bottom:20px;
   border: 1px solid rgb(233, 227, 227);
   width: 450px;
   border-radius: 10px;

@@ -1,9 +1,6 @@
 import React from 'react'
 import Search from './Search'
 import Logo from '../images/logo.png'
-import AnimalForm from './AnimalForm'
-import CatImg from '../images/cat-img.png'
-import DogImg from '../images/dog-img.png'
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -15,12 +12,10 @@ export default function Header({addNewAnimal, search, setSearch}) {
       <Link to='/'><LogoImg src={Logo} alt="logo"/></Link>
       <Search search={search} setSearch={setSearch}/>
         <ClientSideRoute >
-            {/*Link to cat pictures page*/}
-            <Link to='/cat-pictures' className='nav-link'><CatImgBtn src={CatImg} alt="cat-img"/>Pictures</Link>
-            {/*Link to dog pictures page*/}
-            <Link to='/dog-pictures' className='nav-link'><DogImgBtn src={DogImg} alt='dog-img' />Pictures</Link>
+          <Link to='/login' className='nav-link'>Login</Link>
+          <Link to='/signup' className='nav-link'>Sign Up </Link>
             {/*Show form to add new animal on click*/}
-           <AnimalForm addNewAnimal={addNewAnimal}/>
+           {/* <AnimalForm addNewAnimal={addNewAnimal}/> */}
         </ClientSideRoute>  
     </HeaderDiv>
   )
@@ -63,18 +58,4 @@ const ClientSideRoute = styled.div`
     width:260px;
   }
 `
-const CatImgBtn = styled.img`
-  width:40px;
-  @media (max-width:600px) {
-    margin-left:10px;
-  }
- 
-`
-const DogImgBtn = styled.img` 
-  width:45px;
-  margin-left:30px;
-  @media (max-width:600px) {
-    margin-left:5px;
-  }
 
-`
