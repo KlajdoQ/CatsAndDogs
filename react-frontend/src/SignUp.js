@@ -1,6 +1,6 @@
 import React , {useState} from 'react'
 import './SignUp.css'
-export default function SignUp({changeAuthMode, setAuthMode}) {
+export default function SignUp() {
   let [signUpForm, setSignUpForm] = useState({
     full_name: "",
     email: "",
@@ -41,6 +41,11 @@ export default function SignUp({changeAuthMode, setAuthMode}) {
     const { name, value } = event.target;
     setSignUpForm((prevState) => ({ ...prevState, [name]: value }));
   };
+
+  function changeAuthMode (e) {
+    e.preventDefault();
+    window.location.replace('/login')
+  }
 
   return (
     <div className="signup-page">

@@ -1,7 +1,10 @@
 import React, {useState} from 'react'
+import {useNavigate} from 'react-router-dom'
 import './Login.css'
 
-export default function Login({ setAuthMode, changeAuthMode}) {
+export default function Login({ setUser}) {
+
+  let navigate = useNavigate()
   let [signInForm, setSignInForm] = useState({
     email: "",
     password: "",
@@ -22,7 +25,10 @@ export default function Login({ setAuthMode, changeAuthMode}) {
       .then((response) => {
         if (response.ok) {
           // User is authenticated - redirect to the content page
-          window.location.replace("/");
+         // window.location.replace("/");
+         setUser(signInForm.email);
+         navigate('/');
+
         } else if (response.status === 401) {
           // Authentication failed - display error message
           throw new Error("Invalid email or password");
@@ -42,7 +48,11 @@ export default function Login({ setAuthMode, changeAuthMode}) {
     const { name, value } = event.target;
     setSignInForm((prevState) => ({ ...prevState, [name]: value }));
   };
-
+ 
+  function changeAuthMode(e) {
+    e.preventDefault();
+    window.location.replace('/signup')
+ }
 
   return (
     <div className="login-page">

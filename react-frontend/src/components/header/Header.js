@@ -4,22 +4,48 @@ import Logo from '../images/logo.png'
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 
+import { useContext } from 'react';
+import {useNavigate } from 'react-router-dom';
+import { UserContext } from '../contexts/UserContext';
 
-export default function Header({addNewAnimal, search, setSearch}) {
-    //Returning the header with links to home and animal pictures and a form to add a new animal
+export default function Header({ search, setSearch, setUser }) {
+  const navigate = useNavigate();
+  const { user = null } = useContext(UserContext); // provide a default value for user
+
+
+  const handleLogout = () => {
+    fetch('/logout', { method: 'DELETE' })
+      .then(() => {
+        setUser(null);
+        navigate('/');
+      })
+      .catch((error) => console.error(error));
+  };
+
   return (
-    <HeaderDiv >
-      <Link to='/'><LogoImg src={Logo} alt="logo"/></Link>
-      <Search search={search} setSearch={setSearch}/>
-        <ClientSideRoute >
-          <Link to='/login' className='nav-link'>Login</Link>
-          <Link to='/signup' className='nav-link'>Sign Up </Link>
-            {/*Show form to add new animal on click*/}
-           {/* <AnimalForm addNewAnimal={addNewAnimal}/> */}
-        </ClientSideRoute>  
+    <HeaderDiv>
+      <Link to="/">
+        <LogoImg src={Logo} alt="logo" />
+      </Link>
+      <Search search={search} setSearch={setSearch} />
+      {user ? (
+        <button onClick={handleLogout} className="nav-link">
+          Log Out
+        </button>
+      ) : (
+        <ClientSideRoute>
+          <Link to="/login" className="nav-link">
+            Login
+          </Link>
+          <Link to="/signup" className="nav-link">
+            Sign Up
+          </Link>
+        </ClientSideRoute>
+      )}
     </HeaderDiv>
-  )
+  );
 }
+
 
 /*******************************
 *   STYLED COMPONENTS          *
