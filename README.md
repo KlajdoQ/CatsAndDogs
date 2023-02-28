@@ -5,7 +5,7 @@
 ## Description
 
 This is a social media app for all pet lovers that want to post pictures of their own pets. They can like or comment on other posts too. 
-It is very easy to use since it doesnt require any sign in (already working on that)
+The app has full user authentication. 
 
 
 ## Installation
