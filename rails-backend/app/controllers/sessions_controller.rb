@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    sign_out current_user
+    session[:user_id] = nil
     head :no_content
   end
 end
