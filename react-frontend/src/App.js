@@ -36,17 +36,28 @@ function App() {
             path="/"
             element={user ? (
               <>
-              <Header addNewAnimal={addNewAnimal} search={search} setSearch={setSearch} />
+              <Header 
+                addNewAnimal={addNewAnimal} 
+                search={search} 
+                setSearch={setSearch} 
+                setUser={setUser}/>
               <Content
                 search={search}
-              animals={animals}
-              setAnimals={setAnimals}
-              addNewAnimal={addNewAnimal}
+                animals={animals}
+                setAnimals={setAnimals}
+                addNewAnimal={addNewAnimal}
               />
               <Footer />
               </>
             ) : (
-              <SignUp setUser={setUser} />
+              <>
+              <Header 
+                addNewAnimal={addNewAnimal} 
+                search={search} 
+                setSearch={setSearch} 
+                setUser={setUser}/>
+              <div>You must be logged in to view this content</div>
+              </>
             )}
           />
         </Routes>

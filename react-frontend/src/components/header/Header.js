@@ -14,14 +14,13 @@ export default function Header({ search, setSearch, setUser }) {
 
 
   const handleLogout = () => {
-    fetch('/logout', { method: 'DELETE' })
+    fetch("http://localhost:3000/logout", { method: 'DELETE' })
       .then(() => {
         setUser(null);
-        navigate('/');
+      // navigate('/');
       })
       .catch((error) => console.error(error));
   };
-
   return (
     <HeaderDiv>
       <Link to="/">
@@ -29,21 +28,28 @@ export default function Header({ search, setSearch, setUser }) {
       </Link>
       <Search search={search} setSearch={setSearch} />
       {user ? (
-        <button onClick={handleLogout} className="nav-link">
-          Log Out
-        </button>
+        <>
+          <Link to="/profile" className="nav-link">
+            Hello {user.full_name}
+          </Link>
+          <button onClick={handleLogout} className="nav-link">
+            Log Out
+          </button>
+        </>
       ) : (
-        <ClientSideRoute>
+        <>
           <Link to="/login" className="nav-link">
             Login
           </Link>
           <Link to="/signup" className="nav-link">
             Sign Up
           </Link>
-        </ClientSideRoute>
+        </>
       )}
     </HeaderDiv>
   );
+  
+  
 }
 
 

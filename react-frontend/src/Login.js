@@ -25,10 +25,7 @@ export default function Login({ setUser}) {
       .then((response) => {
         if (response.ok) {
           // User is authenticated - redirect to the content page
-         // window.location.replace("/");
-         setUser(signInForm.email);
-         navigate('/');
-
+          return response.json();
         } else if (response.status === 401) {
           // Authentication failed - display error message
           throw new Error("Invalid email or password");
@@ -37,12 +34,16 @@ export default function Login({ setUser}) {
           throw new Error(response.statusText);
         }
       })
+      .then((data) => {
+        setUser(data);
+        navigate('/');
+      })
       .catch((error) => {
         console.error(error);
         // Display error message to the user
       });
   };
-
+  
 
   const handleSignInFormChange = (event) => {
     const { name, value } = event.target;
