@@ -8,7 +8,7 @@ class RegistrationsController < ApplicationController
     
       if @user.save
         sign_in @user
-        render json: { user: @user }, status: :created
+        render json: @user.as_json(only: [:id, :email, :full_name]), status: :created
       else
         render json: { error: @user.errors.full_messages }, status: :unprocessable_entity
       end

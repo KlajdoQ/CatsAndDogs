@@ -6,16 +6,13 @@ class AnimalsController < ApplicationController
 
   def index
     animals = Animal.all.includes(:comments)
-    
     render json: animals.as_json(include: { comments: { include: :replies } })
   end
     
   def show
     animal = Animal.includes(comments: [:replies]).find_by(id: params[:id])
-    
     render json: animal
   end
-
 
   def create_comment
     animal = Animal.find(params[:animal_id])
