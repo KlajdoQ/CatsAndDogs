@@ -1,5 +1,5 @@
 class AnimalsController < ApplicationController
-  before_action :authenticate_user!, only: [:create_comment, :create_reply, :update_comment_likes, :destroy_comment]
+ # before_action :authenticate_user!, only: [:create_comment, :create_reply, :update_comment_likes, :destroy_comment]
 
   attr_reader :current_user
 
@@ -37,13 +37,13 @@ class AnimalsController < ApplicationController
   #      COMMENTS    #
   ####################
   def create_comment
-    animal = Animal.find(params[:animal_id])
-    comment = animal.comments.build(comment_params)
-    comment.user = current_user
-    if comment.save
-      render json: comment, status: :created
+    @animal = Animal.find(params[:animal_id])
+    @comment = @animal.comments.build(params.require(:comment).permit(:comment))
+  
+    if @comment.save
+      render json: @comment, status: :created
     else
-      render json: comment.errors, status: :unprocessable_entity
+      render json: { errors: @comment.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -74,7 +74,7 @@ class AnimalsController < ApplicationController
     private
 
   def comment_params
-      params.require(:comment).permit(:comment, :comment_likes)
+      params.require(:comment).permit(:comment, :comment_likes, :reply)
   end
       
   def reply_params
