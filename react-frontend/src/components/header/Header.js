@@ -5,11 +5,9 @@ import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 
 import { useContext } from 'react';
-import {useNavigate } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContext';
 
 export default function Header({ search, setSearch, setUser }) {
-  const navigate = useNavigate();
   const { user = null } = useContext(UserContext); // provide a default value for user
 
 

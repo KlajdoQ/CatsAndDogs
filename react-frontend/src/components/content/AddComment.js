@@ -7,9 +7,8 @@ export default function AddComment({ animal, setAnimals }) {
   // state to determine if the comment form is displayed
   const [showComment, setshowComment] = useState(false);
   // state to keep track of the like status of a comment
-  const [likeComment, setLikeComment] = useState(Array(animal.comments.length ?? 0).fill(false));
-  // state to determine if a comment has been liked
-  const [isLikeClicked, setIsLikeClicked] = useState(false);
+  const [likeComment, setLikeComment] = useState([]);
+
   // state to keep track of the replies to a comment
   const [showReply, setShowReply] = useState(Array(animal.comments.length).fill(false));
   const [newReply, setNewReply] = useState(Array(animal.comments.length).fill(""));
@@ -50,6 +49,15 @@ export default function AddComment({ animal, setAnimals }) {
   }
 
   // function to like a comment and update the json file
+  
+  // function to show the comments when the comment is clicked
+  function showCommentReplies(commentIndex) {
+    setShowReply((prev) => {
+      let isCommentShown = { ...prev };
+      isCommentShown[commentIndex] = !isCommentShown[commentIndex];
+      return isCommentShown;
+    });
+  }
   function likeComments(commentIndex) {
     fetch(`http://localhost:3000/animals/${animal.id}/update_comment_likes?comment_id=${animal.comments[commentIndex].id}`, {
       method: "POST",
@@ -61,41 +69,14 @@ export default function AddComment({ animal, setAnimals }) {
       .then((response) => response.json())
       .then((updatedComment) => {
         setLikeComment((prevLikes) => {
-          let updatedLikes = [...prevLikes];
+          const updatedLikes = [...prevLikes];
           updatedLikes[commentIndex] = true;
           return updatedLikes;
         });
-  
-        setAnimals((prevAnimals) =>
-          prevAnimals.map((currentAnimal) => {
-            if (currentAnimal.id === animal.id) {
-              return {
-                ...currentAnimal,
-                comments: currentAnimal.comments.map((currentComment, i) =>
-                  i === commentIndex
-                    ? { ...updatedComment, replies: currentComment.replies }
-                    : currentComment
-                ),
-              };
-            } else {
-              return currentAnimal;
-            }
-          })
-        )
       })
       .catch((error) => console.error(error));
   }
   
-
-  // function to show the comments when the comment is clicked
-  function showCommentReplies(commentIndex) {
-    setShowReply((prev) => {
-      let isCommentShown = { ...prev };
-      isCommentShown[commentIndex] = !isCommentShown[commentIndex];
-      return isCommentShown;
-    });
-  }
-
   //function to assign the state change to the reply
   function handleReplyChange(e) {
     setNewReply(e.target.value);

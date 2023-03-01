@@ -3,7 +3,7 @@ import AnimalDetail from './AnimalDetail'
 import styled from 'styled-components'
 
 
-export default function AnimalList({ animals, addLikes ,setAnimals }) {
+export default function AnimalList({ animals, addLikes ,setAnimals , addNewAnimal}) {
     // displayCount state to determine how many animals are displayed
   const [displayCount, setDisplayCount] = useState(5)
 
@@ -17,6 +17,7 @@ export default function AnimalList({ animals, addLikes ,setAnimals }) {
         key={animal.id}
         addLikes={addLikes}
         setAnimals={setAnimals}
+        addNewAnimal={addNewAnimal}
       />
     ))
 

@@ -6,7 +6,7 @@ import AnimalForm from './AnimalForm'
 import './Content.css'
 
 
-export default function Content({addLikes,search, animals, setAnimals, addNewAnimal}) {
+export default function Content({search, animals, setAnimals, addNewAnimal}) {
   
 
   useEffect(() => {
@@ -23,25 +23,13 @@ export default function Content({addLikes,search, animals, setAnimals, addNewAni
   );
 
   
-  function addLikes(updatedAnimal) {
-    setAnimals((prevAnimals) => {
-      return prevAnimals.map((prevAnimal) => {
-        if (prevAnimal.id === updatedAnimal.id) {
-          return { ...prevAnimal, likes: updatedAnimal.likes };
-        } else {
-          return prevAnimal;
-        }
-      });
-    });
-  }
 
   return (
     <div className="content-box">
-      <AnimalForm />
+      <AnimalForm addNewAnimal={addNewAnimal} animals={animals} setAnimals={setAnimals}/>
       <ContentDiv >
         <AnimalList 
             animals={filteredAnimals} 
-            addLikes={addLikes}
             setAnimals={setAnimals} />
         <CatSection/>
       </ContentDiv>

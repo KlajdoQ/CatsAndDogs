@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import UserImg from '../images/search-img.avif'
 
+import { useContext } from 'react';
+import { UserContext } from '../contexts/UserContext';
+
 export default function AnimalForm({addNewAnimal}) {
+  const { user = null } = useContext(UserContext); // provide a default value for user
 
     //Create a state to control the visibility of the modal on page load 
   const [show, setShow] = useState(false);
@@ -26,12 +30,14 @@ export default function AnimalForm({addNewAnimal}) {
     })
   }
   // Function to submit the form and add a new animal
-  const handleSubmit = () => {
-    // Creating a new animal object by adding the likes property
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const newAnimal ={
       ...formData,
-      likes: 0
+      user_id: user.id
     }
+    
+    
     fetch('http://localhost:3000/animals',{
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
@@ -39,7 +45,8 @@ export default function AnimalForm({addNewAnimal}) {
     })
     .then(response=>response.json())
     .then(addNewAnimal)
-  };
+    handleClose()
+  }
  
   return (
     <>

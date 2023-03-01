@@ -16,9 +16,9 @@ function App() {
   const [user, setUser] = useState(null);
 
   function addNewAnimal(newAnimal) {
-    setAnimals([newAnimal, ...animals]);
+    setAnimals([...animals, newAnimal]);
   }
-
+  
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <div className="app">
@@ -37,7 +37,6 @@ function App() {
             element={user ? (
               <>
               <Header 
-                addNewAnimal={addNewAnimal} 
                 search={search} 
                 setSearch={setSearch} 
                 setUser={setUser}/>

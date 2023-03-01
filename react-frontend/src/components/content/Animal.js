@@ -19,7 +19,7 @@ export default function Animal({animal, likeButtonStyle, handleClick, likesFunct
       <LikeCommentShare>
         <AnimalLikes style={likeButtonStyle} onClick={handleClick}>
           <PawImg src={Paw} alt="paw" />
-          {likes}  {likesFunction()}
+          {likes.length}  {likesFunction()}
         </AnimalLikes>
         <button onClick={showCom} className="btn-comments">
           {comments && comments.length} {comments && comments.length === 1 ? "Comment" : "Comments"}
