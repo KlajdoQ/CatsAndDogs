@@ -14,26 +14,39 @@ class AnimalsController < ApplicationController
     render json: animal
   end
 
+  def create
+  animal = Animal.create(animal_params)
+  render json: animal, status: :created
+  end
+  
+  def update
+    animal = Animal.find(params[:id])
+    user_id = params[:user_id]
+    likes = animal.likes.where(user_id: user_id)
+    if likes.exists?
+      likes.destroy_all
+    else
+      like = Like.new(user_id: user_id)
+      animal.likes << like
+    end
+    animal.save
+    render json: animal, include: :user
+  end
+  
+  ####################
+  #      COMMENTS    #
+  ####################
   def create_comment
     animal = Animal.find(params[:animal_id])
-    comment = animal.comments.create(comment_params)
+    comment = animal.comments.build(comment_params)
     comment.user = current_user
-    render json: comment.as_json(include: { replies: { } }), status: :created
-  end
-    
-  def create_reply
-    comment = Comment.find(params[:comment_id])
-    reply = comment.replies.create(reply_params)
-    reply.user = current_user
-    render json: reply
+    if comment.save
+      render json: comment, status: :created
+    else
+      render json: comment.errors, status: :unprocessable_entity
+    end
   end
 
-    def update
-      animal = Animal.find(params[:id])
-      animal.user = current_user
-      animal.update(animal_params)
-      render json: animal
-    end
 
   def update_comment_likes
     comment = Comment.find(params[:comment_id])
@@ -41,7 +54,7 @@ class AnimalsController < ApplicationController
     comment_like.user = current_user
     render json: comment, include: :comment_likes
   end
-      
+  
   def destroy_comment
     comment = Comment.find(params[:comment_id])
     comment.user = current_user
@@ -49,12 +62,19 @@ class AnimalsController < ApplicationController
     comment.destroy
     head :no_content
   end
+  
+  def create_reply
+    comment = Comment.find(params[:comment_id])
+    reply = comment.replies.create(reply_params)
+    reply.user = current_user
+    render json: reply
+  end
     
     
     private
 
   def comment_params
-      params.require(:comment).permit(:comment, :likes)
+      params.require(:comment).permit(:comment, :comment_likes)
   end
       
   def reply_params
@@ -62,7 +82,7 @@ class AnimalsController < ApplicationController
   end
       
   def animal_params
-    params.require(:animal).permit(:name, :species, :breed, :age, :likes, comments_attributes: [:comment, :likes, replies_attributes: [:reply]])
+    params.require(:animal).permit(:name, :likes,:breed,:image, :hobbies, :user_id, comments_attributes: [:comment, :comment_likes, replies_attributes: [:reply]])
   end
       
   def authorize_request

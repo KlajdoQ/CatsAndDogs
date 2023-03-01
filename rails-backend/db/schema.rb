@@ -17,8 +17,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_27_001415) do
     t.string "breed"
     t.string "hobbies"
     t.integer "likes"
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_animals_on_user_id"
   end
 
   create_table "comment_likes", force: :cascade do |t|
@@ -39,6 +41,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_27_001415) do
 
   create_table "likes", force: :cascade do |t|
     t.integer "animal_id"
+    t.integer "user_id"
+    t.integer "likes", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -66,6 +70,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_27_001415) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "animals", "users"
   add_foreign_key "comment_likes", "comments"
   add_foreign_key "comments", "animals"
   add_foreign_key "replies", "comments"

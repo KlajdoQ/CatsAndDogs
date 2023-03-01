@@ -5,7 +5,10 @@ Rails.application.routes.draw do
   post '/signup', to: 'users#create'
   get '/signup', to: 'users#index'
   delete '/logout', to: 'sessions#destroy'
+  
   resources :animals do
+    patch '/animals/:id', to: 'animals#update'
+    
     post 'comments', to: 'animals#create_comment'
     post 'comments/:comment_id/replies', to: 'animals#create_reply'
     post '/update_comment_likes', to: 'animals#update_comment_likes'
