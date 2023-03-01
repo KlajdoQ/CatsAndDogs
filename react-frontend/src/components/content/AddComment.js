@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import CommentAndReplyForm from "./CommentAndReplyForm";
+import { useContext } from 'react';
+import { UserContext } from '../contexts/UserContext';
 
 export default function AddComment({ animal, setAnimals }) {
   // state to keep track of the new comment being added
@@ -9,28 +11,35 @@ export default function AddComment({ animal, setAnimals }) {
   // state to keep track of the like status of a comment
   const [likeComment, setLikeComment] = useState([]);
 
-  // state to keep track of the replies to a comment
-  const [showReply, setShowReply] = useState(Array(animal.comments.length).fill(false));
-  const [newReply, setNewReply] = useState(Array(animal.comments.length).fill(""));
+  // update the animal state in the parent component with a new comment and also update the backend
+  const [showReply, setShowReply] = useState(animal.comments ? Array(animal.comments.length).fill(false) : []);
+  const [newReply, setNewReply] = useState(animal.comments ? Array(animal.comments.length).fill("") : []);
+  const { user} = useContext(UserContext)
+
+  
 
   // update the animal state in the parent component with a new comment and also update the backend
   function handleCommentSubmit(event) {
     event.preventDefault();
     if (newComment) {
+      const requestBody = { comment: { comment: newComment } };
       fetch(`http://localhost:3000/animals/${animal.id}/comments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify({ comment: { comment: newComment} }),
+        body: JSON.stringify(requestBody),
       })
         .then((response) => response.json())
         .then((newComment) => {
           setAnimals((prevAnimals) =>
             prevAnimals.map((currentAnimal) => {
               if (currentAnimal.id === animal.id) {
-                return { ...currentAnimal, comments: [...currentAnimal.comments, newComment] };
+                return {
+                  ...currentAnimal,
+                  comments: [...(currentAnimal.comments || []), newComment],
+                };
               } else {
                 return currentAnimal;
               }
@@ -38,11 +47,11 @@ export default function AddComment({ animal, setAnimals }) {
           );
           setnewComment("");
           setshowComment(true);
-
         })
         .catch((error) => console.error(error));
     }
   }
+
   // function to handle the change in the comment input
   function handleCommentChange(event) {
     setnewComment(event.target.value);

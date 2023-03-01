@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { useContext } from 'react';
+import { UserContext } from '../contexts/UserContext';
+
 
 export default function CommentAndReplyForm({
   handleCommentChange,
@@ -17,6 +20,8 @@ export default function CommentAndReplyForm({
   newComment,
   handleCommentDelete,
 }) {
+
+  const { user} = useContext(UserContext)
   // Generate unique IDs for each comment
   const generateCommentId = (index) => `comment-${index}`;
 
@@ -29,7 +34,6 @@ export default function CommentAndReplyForm({
   function handleDelete(commentIndex) {
     handleCommentDelete(commentIndex);
   }
-
   // This component renders a form that allows the user to submit comments and replies
   return (
     <form onSubmit={handleCommentSubmit}>
@@ -37,8 +41,11 @@ export default function CommentAndReplyForm({
       {animal.comments &&
         animal.comments?.map((comment, commentIndex) => (
           <div key={generateCommentId(commentIndex)}>
-            <CommentsList animal={animal} setAnimals={setAnimals}>
-              {comment.comment}
+             
+            <CommentsList 
+            animal={animal} 
+            setAnimals={setAnimals}>
+            {user.full_name} {comment.comment}
             </CommentsList>
             <LikeReply
               key={generateCommentLikeId(commentIndex)}
