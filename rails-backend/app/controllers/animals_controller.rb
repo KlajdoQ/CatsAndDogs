@@ -38,14 +38,11 @@ class AnimalsController < ApplicationController
   ####################
   def create_comment
     @animal = Animal.find(params[:animal_id])
-    @comment = @animal.comments.build(params.require(:comment).permit(:comment))
-  
-    if @comment.save
-      render json: @comment, status: :created
-    else
-      render json: { errors: @comment.errors.full_messages }, status: :unprocessable_entity
-    end
+    @comment = @animal.comments.create(comment_params)
+    @comment.save
+    render json: @comment
   end
+  
 
 
   def update_comment_likes
@@ -74,7 +71,7 @@ class AnimalsController < ApplicationController
     private
 
   def comment_params
-      params.require(:comment).permit(:comment, :comment_likes, :reply)
+      params.require(:comment).permit(:comment, :reply, :user_id)
   end
       
   def reply_params
