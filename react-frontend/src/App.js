@@ -5,6 +5,7 @@ import Content from './components/content/Content'
 import Footer from './components/Footer'
 import Login from './Login'
 import SignUp from './SignUp'
+import Profile from './Profile'
 import {Routes, Route} from "react-router-dom"
 import { useContext } from 'react'
 import { UserContext } from './components/contexts/UserContext'
@@ -32,6 +33,9 @@ function App() {
             path="/signup"
             element={<SignUp setUser={setUser} />}
           />
+            <Route
+            path="/profile"
+            element={<Profile setUser={setUser} />}/>
           <Route
             path="/"
             element={user ? (
@@ -45,6 +49,7 @@ function App() {
                 animals={animals}
                 setAnimals={setAnimals}
                 addNewAnimal={addNewAnimal}
+                setUser={setUser}
               />
               <Footer />
               </>

@@ -16,13 +16,10 @@ export default function AddComment({ animal, setAnimals }) {
   const [newReply, setNewReply] = useState(animal.comments ? Array(animal.comments.length).fill("") : []);
   const { user} = useContext(UserContext)
 
-  
-
-  // update the animal state in the parent component with a new comment and also update the backend
   function handleCommentSubmit(event) {
     event.preventDefault();
     if (newComment) {
-      const requestBody = { comment: { comment: newComment } };
+      const requestBody = { comment: { comment: newComment, user_id: user.id } };
       fetch(`http://localhost:3000/animals/${animal.id}/comments`, {
         method: "POST",
         headers: {
@@ -51,7 +48,10 @@ export default function AddComment({ animal, setAnimals }) {
         .catch((error) => console.error(error));
     }
   }
+  
 
+  // update the animal state in the parent component with a new comment and also update the backend
+  
   // function to handle the change in the comment input
   function handleCommentChange(event) {
     setnewComment(event.target.value);
@@ -170,11 +170,12 @@ export default function AddComment({ animal, setAnimals }) {
       showReply={showReply}
       newReply={newReply}
       handleReplyChange={handleReplyChange}
-      newComment={newComment}
+
       handleCommentChange={handleCommentChange}
       handleReplySubmit={handleReplySubmit}
       showComment={showComment}
       handleCommentDelete={handleCommentDelete}
+
     />
   );
 }

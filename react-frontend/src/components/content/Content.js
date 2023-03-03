@@ -6,9 +6,8 @@ import AnimalForm from './AnimalForm'
 import './Content.css'
 
 
-export default function Content({search, animals, setAnimals, addNewAnimal}) {
+export default function Content({search, animals, setAnimals, addNewAnimal, setUser}) {
   
-
   useEffect(() => {
     fetch("http://localhost:3000/animals")
       .then((response) => response.json())
@@ -22,15 +21,14 @@ export default function Content({search, animals, setAnimals, addNewAnimal}) {
       animal.breed.toLowerCase().includes(search.toLowerCase())
   );
 
-  
-
   return (
     <div className="content-box">
       <AnimalForm addNewAnimal={addNewAnimal} animals={animals} setAnimals={setAnimals}/>
       <ContentDiv >
         <AnimalList 
             animals={filteredAnimals} 
-            setAnimals={setAnimals} />
+            setAnimals={setAnimals}
+            setUser={setUser}/>
         <CatSection/>
       </ContentDiv>
     </div>

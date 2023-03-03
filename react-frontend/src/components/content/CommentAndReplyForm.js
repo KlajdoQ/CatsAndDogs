@@ -1,4 +1,4 @@
-import React from "react";
+import React,{createContext} from "react";
 import styled from "styled-components";
 import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
@@ -19,18 +19,22 @@ export default function CommentAndReplyForm({
   showComment,
   newComment,
   handleCommentDelete,
+  user_id
 }) {
 
   const { user} = useContext(UserContext)
+
+
+  
   // Generate unique IDs for each comment
   const generateCommentId = (index) => `comment-${index}`;
-
+  
   // Generate unique IDs for each comment like
   const generateCommentLikeId = (commentIndex) =>
-    `comment-${commentIndex}-like`;
+  `comment-${commentIndex}-like`;
   const generateCommentReplyId = (commentIndex, replyIndex) =>
-    `comment-${commentIndex}-reply-${replyIndex}`;
-
+  `comment-${commentIndex}-reply-${replyIndex}`;
+  
   function handleDelete(commentIndex) {
     handleCommentDelete(commentIndex);
   }
@@ -41,12 +45,11 @@ export default function CommentAndReplyForm({
       {animal.comments &&
         animal.comments?.map((comment, commentIndex) => (
           <div key={generateCommentId(commentIndex)}>
-             
-            <CommentsList 
+            <div className="comments-list" 
             animal={animal} 
             setAnimals={setAnimals}>
-            {user.full_name} {comment.comment}
-            </CommentsList>
+            {comment.author_full_name}{comment.comment}
+            </div>
             <LikeReply
               key={generateCommentLikeId(commentIndex)}
               onClick={() => likeComments(commentIndex)}
@@ -113,17 +116,7 @@ export default function CommentAndReplyForm({
 /*******************************
  *   STYLED COMPONENTS          *
  *******************************/
-const CommentsList = styled.li`
-  list-style: none;
-  background-color: rgb(243, 243, 243);
-  height: auto;
-  padding: 10px;
-  margin: 20px;
-  display: flex;
-  align-items: center;
-  border-radius: 10px;
-  margin-bottom: -4px;
-`;
+
 
 const LikeReply = styled.button`
   border: none;
@@ -164,8 +157,4 @@ const TypeReply = styled.textarea`
   margin-right: 20px;
   height: 30px;
   width: 200px;
-`;
-
-const NewReplyLi = styled.li`
-  list-style: none;
 `;

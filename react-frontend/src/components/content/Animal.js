@@ -4,7 +4,15 @@ import AddComment from './AddComment'
 import ShareButton from './ShareButton'
 import styled from 'styled-components'
 
-export default function Animal({animal, likeButtonStyle, handleClick, likesFunction, showCom, showComments, setAnimals}) {
+export default function Animal({animal, 
+  likeButtonStyle, 
+  handleClick, 
+  likesFunction, 
+  showCom,
+   showComments, 
+   setAnimals,
+   setUser
+  }) {
   const {name, image, hobbies, breed, likes, comments} = animal
 
   return (
@@ -31,6 +39,7 @@ export default function Animal({animal, likeButtonStyle, handleClick, likesFunct
         key={animal.image} 
         setAnimals={setAnimals} 
         animal={animal}
+        setUser={setUser}
          />
       ) : null}
     </AnimalDiv>

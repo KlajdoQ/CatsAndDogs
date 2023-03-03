@@ -34,6 +34,19 @@ body {
   height:50px;
   border-radius: 50%;
 }
+
+
+.comments-list {
+  list-style: none;
+  background-color: rgb(243, 243, 243);
+  height: auto;
+  padding: 10px;
+  margin: 20px;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  margin-bottom: -4px;
+}
 /*******************************
 *     NAV LINKS                *
 *******************************/
