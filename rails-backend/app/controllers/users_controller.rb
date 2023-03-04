@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   #skip_before_action :authorized_user
 
-
   def index
     users = User.all
     render json: users.as_json(only: [:id, :email, :full_name])
