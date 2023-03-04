@@ -81,8 +81,8 @@ export default function CommentAndReplyForm({
               ↳ Reply
             </LikeReply>
             <LikeReply onClick={(e) => handleDelete(commentIndex)}>
-              &#9746; Delete
-            </LikeReply>
+  {user_id === comment.user_id && <>&#9746; Delete</>}
+</LikeReply>
             <ul>
               {comment.replies && Array.isArray(comment.replies) && comment.replies.length > 0
                 ? comment.replies.map((reply, replyIndex) => (

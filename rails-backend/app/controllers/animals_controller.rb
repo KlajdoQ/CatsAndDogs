@@ -55,7 +55,7 @@ class AnimalsController < ApplicationController
   
   def destroy_comment
     comment = Comment.find(params[:comment_id])
-    comment.user = current_user
+    #comment.user = current_user
     comment.replies.destroy_all
     comment.destroy
     head :no_content
