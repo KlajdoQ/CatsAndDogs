@@ -19,7 +19,13 @@ export default function AddComment({ animal, setAnimals }) {
   function handleCommentSubmit(event) {
     event.preventDefault();
     if (newComment) {
-      const requestBody = { comment: { comment: newComment, user_id: user.id } };
+      const requestBody = { comment: 
+        { 
+          comment: newComment, 
+          user_id: user.id , 
+          author_name: user.full_name,
+         
+        } };
       fetch(`http://localhost:3000/animals/${animal.id}/comments`, {
         method: "POST",
         headers: {

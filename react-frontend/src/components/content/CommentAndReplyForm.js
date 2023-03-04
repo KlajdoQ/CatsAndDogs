@@ -1,4 +1,4 @@
-import React,{createContext} from "react";
+import React,{createContext, useState, useEffect} from "react";
 import styled from "styled-components";
 import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
@@ -21,11 +21,29 @@ export default function CommentAndReplyForm({
   handleCommentDelete,
   user_id
 }) {
-
   const { user} = useContext(UserContext)
 
+  const [commentAuthors, setCommentAuthors] = useState({});
+  const [users, setUsers] = useState([]);
 
-  
+  useEffect(() => {
+    fetch('http://localhost:3000/users')
+      .then((response) => response.json())
+      .then((data) => {
+        setUsers(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    const authors = {};
+    users.forEach((user) => {
+      authors[user.id] = user.full_name;
+    });
+    setCommentAuthors(authors);
+  }, [users]);
   // Generate unique IDs for each comment
   const generateCommentId = (index) => `comment-${index}`;
   
@@ -38,9 +56,11 @@ export default function CommentAndReplyForm({
   function handleDelete(commentIndex) {
     handleCommentDelete(commentIndex);
   }
+
+ 
   // This component renders a form that allows the user to submit comments and replies
   return (
-    <form onSubmit={handleCommentSubmit}>
+<form onSubmit={(event) => handleCommentSubmit(event, user)}>
       {/* Map over the comments in the `animal` object and render a `CommentsList` component for each comment */}
       {animal.comments &&
         animal.comments?.map((comment, commentIndex) => (
@@ -48,7 +68,7 @@ export default function CommentAndReplyForm({
             <div className="comments-list" 
             animal={animal} 
             setAnimals={setAnimals}>
-            {comment.author_name}{comment.comment}
+              {commentAuthors[comment.user_id] || `User ${comment.user_id}`}: {comment.comment}
             </div>
             <LikeReply
               key={generateCommentLikeId(commentIndex)}
