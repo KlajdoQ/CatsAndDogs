@@ -2,8 +2,18 @@ class UsersController < ApplicationController
   #skip_before_action :authorized_user
 
   def index
-    user = User.new
-    render json: user
+    users = User.all
+    render json: users.as_json(only: [:id, :email, :full_name])
+  end
+
+  def all_users
+    users = User.all
+    render json: users.as_json(only: [:id, :email, :full_name])
+  end
+
+  def show
+    user = User.find(params[:id])
+    render json: user.as_json(only: [:id, :email, :full_name])
   end
 
   def create
