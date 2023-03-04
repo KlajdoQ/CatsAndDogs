@@ -19,7 +19,18 @@ function App() {
   function addNewAnimal(newAnimal) {
     setAnimals([...animals, newAnimal]);
   }
-  
+  // useEffect(() => {
+  //   fetch("http://localhost:3000/authorized")
+  //   .then(res=> {
+  //     if(res.ok){
+  //       res.json().then(user => {
+  //         setUser(user)
+  //       })
+  //     }else {
+  //       setUser(null)
+  //     }
+  //   })
+  // }, [])
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <div className="app">

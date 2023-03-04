@@ -48,7 +48,7 @@ export default function CommentAndReplyForm({
             <div className="comments-list" 
             animal={animal} 
             setAnimals={setAnimals}>
-            {comment.author_full_name}{comment.comment}
+            {comment.author_name}{comment.comment}
             </div>
             <LikeReply
               key={generateCommentLikeId(commentIndex)}

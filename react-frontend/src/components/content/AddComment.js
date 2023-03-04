@@ -175,7 +175,7 @@ export default function AddComment({ animal, setAnimals }) {
       handleReplySubmit={handleReplySubmit}
       showComment={showComment}
       handleCommentDelete={handleCommentDelete}
-
+    user_id={user.id}
     />
   );
 }
