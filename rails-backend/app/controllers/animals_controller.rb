@@ -1,7 +1,8 @@
 class AnimalsController < ApplicationController
- # before_action :authenticate_user!, only: [:create_comment, :create_reply, :update_comment_likes, :destroy_comment]
+  #before_action :authenticate_user!, only: [:create_comment, :create_reply, :update_comment_likes, :destroy_comment]
+ #attr_reader :current_user
 
-  attr_reader :current_user
+  include ActionController::Cookies
 
 
   def index
@@ -71,7 +72,7 @@ class AnimalsController < ApplicationController
     private
 
   def comment_params
-      params.require(:comment).permit(:comment, :reply, :user_id)
+      params.require(:comment).permit(:comment, :reply, :author_name, :user_id)
   end
       
   def reply_params
