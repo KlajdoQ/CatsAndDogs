@@ -1,5 +1,5 @@
 class AnimalsController < ApplicationController
-  #before_action :authenticate_user!, only: [:create_comment, :create_reply, :update_comment_likes, :destroy_comment]
+#before_action :authenticate_user!, only: [:create_comment, :create_reply, :update_comment_likes, :destroy_comment]
  #attr_reader :current_user
 
   include ActionController::Cookies
