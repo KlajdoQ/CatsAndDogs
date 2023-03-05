@@ -28,7 +28,8 @@ export default function SearchBar({ search, setSearch }) {
 const SearchBarDiv = styled.div`
   margin-top:50px;
   height:110px;
-  @media (max-width:600px) {
+ 
+  @media (max-width:800px) {
     width:350px;
   }
   `;
@@ -53,7 +54,8 @@ const SearchBarDiv = styled.div`
   outline:none;
   padding-left:20px;
   margin-top:8px;
-  @media (max-width:600px) {
-    margin-top:40px;
+  
+  @media (max-width:800px) {
+    margin-top:35px;
   }
 `;

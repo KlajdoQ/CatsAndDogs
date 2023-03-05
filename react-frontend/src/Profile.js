@@ -1,34 +1,30 @@
 import React , {useState} from 'react'
+import './Profile.css'
 import { useContext } from 'react';
 import { UserContext } from './components/contexts/UserContext'
 
 
 export default function Profile() {
-    const { user} = useContext(UserContext); // provide a default value for user
-    const [edit, setEdit] = useState(user)
-    
-    
-    
-    function editProfile(e) {
-        setEdit(e.target.value)
-    }
+  const { user} = useContext(UserContext); // provide a default value for user
+  const [edit, setEdit] = useState(user);
+  const [imageFile, setImageFile] = useState(null);
+  
+  function editProfile(e) {
+      setEdit(e.target.value)
+  }
 
   return (
-  <>
-<div className="container">
-    <h1>Edit Profile</h1>
-  
-	<div className="row">
-      
-      <div className="col-md-3">
-        <div className="text-center">
-          <img src="//placehold.it/100" className="avatar img-circle" alt="avatar"/>
-          <h6>Upload a different photo...</h6>
-          
-          <input type="file" className="form-control"/>
-        </div>
-      </div>
-      
+      <>
+      <div className="container">
+          <h1 className="edit-profile">Edit Profile</h1>
+          <div className="row">
+              <div className="col-md-3">
+                  <div className="text-center">
+                      <img src={imageFile ? URL.createObjectURL(imageFile) : "//placehold.it/100"} className="avatar img-circle" alt="avatar"/>
+                      <h6>Upload a different photo...</h6>
+                      <input type="file" className="form-control" onChange={(e) => setImageFile(e.target.files[0])}/>
+                  </div>
+              </div>
     
       <div className="col-md-9 personal-info">
         <div className="alert alert-info alert-dismissable">
@@ -54,23 +50,6 @@ export default function Profile() {
             <label className="col-lg-3 control-label">Email:</label>
             <div className="col-lg-8">
               <input className="form-control" type="text" value={user.email} onChange={editProfile}/>
-            </div>
-          </div>
-          <div className="form-group">
-            <label className="col-lg-3 control-label">Time Zone:</label>
-            <div className="col-lg-8">
-              <div className="ui-select">
-                <select id="user_time_zone" class="form-control">
-                  <option value="Hawaii">(GMT-10:00) Hawaii</option>
-                  <option value="Alaska">(GMT-09:00) Alaska</option>
-                  <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
-                  <option value="Arizona">(GMT-07:00) Arizona</option>
-                  <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
-                  <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
-                  <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
-                  <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
-                </select>
-              </div>
             </div>
           </div>
           {/* <div className="form-group">

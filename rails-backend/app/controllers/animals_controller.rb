@@ -61,12 +61,15 @@ class AnimalsController < ApplicationController
     head :no_content
   end
   
+  ####################
+  #      REPLIES     #
+  ####################
   def create_reply
     comment = Comment.find(params[:comment_id])
     reply = comment.replies.create(reply_params)
-    reply.user = current_user
-    render json: reply
+    render json: reply, status: :created
   end
+  
     
     
     private
@@ -76,7 +79,7 @@ class AnimalsController < ApplicationController
   end
       
   def reply_params
-    params.require(:reply).permit(:reply)
+    params.require(:reply).permit(:reply, :user_id)
   end
       
   def animal_params

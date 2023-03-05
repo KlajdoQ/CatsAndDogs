@@ -19,6 +19,12 @@ body {
   font-size: 20px;
   background-color: rgb(241, 242, 242);
 }
+@media (max-width:800px) {
+  .search-box{
+    width:300px;
+
+  }
+}
 
 .usrimg-search {
   display:flex;
@@ -47,44 +53,8 @@ body {
   border-radius: 10px;
   margin-bottom: -4px;
 }
-/*******************************
-*     NAV LINKS                *
-*******************************/
-.nav-link{
-  color:white;
-  text-decoration: none;
-  margin-right:30px;
-}
-.nav-links {
-  margin:20px;
-  border:none;
-  border-radius:5px;
-  font-size:20px;
-  background-color: rgb(193, 49, 49);
-  color:white;
-  text-decoration: none;
-  height:45px;
-}
-@media only screen and (max-width: 600px) {
- .hide-dog-section {
-  display: none;
- }
- .nav-links span{
-  display:flex;
-  align-items: center;
-  justify-content: center;
-  font-size:35px;
-  padding-bottom:10px;
-  width:50px;
-  height:45px;
- }
- .nav-links .new-pet {
-  display: none;
- }
- .nav-links {
-  width:60px;
- }
-}
+
+
 /*******************************
 *     ANIMAL FORM              *
 *******************************/

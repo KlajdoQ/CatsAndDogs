@@ -3,6 +3,7 @@ import Search from './Search'
 import Logo from '../images/logo.png'
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
+import './Header.css'
 
 import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
@@ -20,31 +21,37 @@ export default function Header({ search, setSearch, setUser }) {
       .catch((error) => console.error(error));
   };
   return (
-    <HeaderDiv>
+    <div className="header-div">
       <Link to="/">
         <LogoImg src={Logo} alt="logo" />
       </Link>
-      <Search search={search} setSearch={setSearch} />
       {user ? (
         <>
-          <Link to="/profile" className="nav-link">
-            Hello {user.full_name}
-          </Link>
-          <button onClick={handleLogout} className="nav-link">
-            Log Out
-          </button>
+        <Search search={search} setSearch={setSearch} />
+          <div className='header-links'>
+            <Link to="/profile" className="nav-link">
+              {user.full_name}
+            </Link>
+            <button onClick={handleLogout} className="logoutBtn">
+              Log Out
+            </button>
+          </div>
         </>
       ) : (
-        <>
-          <Link to="/login" className="nav-link">
-            Login
-          </Link>
-          <Link to="/signup" className="nav-link">
-            Sign Up
-          </Link>
-        </>
+        <div className="header-links">
+          <button className="navBtn">
+            <Link to="/login"  className="navLink">
+              Login
+            </Link>
+          </button>
+          <button  className="navBtn">
+            <Link to="/signup"className="navLink" >
+              Sign Up
+            </Link>
+          </button>
+        </div>
       )}
-    </HeaderDiv>
+    </div>
   );
   
   
@@ -54,21 +61,7 @@ export default function Header({ search, setSearch, setUser }) {
 /*******************************
 *   STYLED COMPONENTS          *
 *******************************/
-const HeaderDiv = styled.div `
-  background-color: rgb(230, 117, 64);
-  color:white;
-  height:80px;
-  display:flex;
-  align-items: center;
-  justify-content: left;
-  position: relative;
 
-  @media (max-width: 768px) {
-    width: 100%;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom:50px;
-`
 const LogoImg = styled.img`
   width:140px;
   @media (max-width:600px) {
@@ -78,14 +71,5 @@ const LogoImg = styled.img`
     left: 0;
   }
 `
-const ClientSideRoute = styled.div`
-  position:absolute;
-  right:10px;
-  display: flex;
-  align-items: center;
-  overflow: visible ;
-  @media (max-width:600px) {
-    width:260px;
-  }
-`
+
 

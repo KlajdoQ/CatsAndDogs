@@ -23,6 +23,7 @@ export default function CommentAndReplyForm({
 }) {
   const { user} = useContext(UserContext)
 
+  const [replyAuthors, setReplyAuthors] = useState({})
   const [commentAuthors, setCommentAuthors] = useState({});
   const [users, setUsers] = useState([]);
 
@@ -42,8 +43,19 @@ export default function CommentAndReplyForm({
     users.forEach((user) => {
       authors[user.id] = user.full_name;
     });
-    setCommentAuthors(authors);
+    setCommentAuthors(authors)
   }, [users]);
+  
+  // useEffect(() => {
+  //   const authors = {};
+  //   users.forEach((user) => {
+  //     authors[user.id] = user.full_name;
+  //   });
+  //   setReplyAuthors(authors)
+  // }, [users]);
+
+
+
   // Generate unique IDs for each comment
   const generateCommentId = (index) => `comment-${index}`;
   
@@ -75,21 +87,21 @@ export default function CommentAndReplyForm({
               onClick={() => likeComments(commentIndex)}
             >
               {/* Display a heart icon depending on whether the comment has been liked */}
-              {likeComment[commentIndex] ? "♥" : "♡"} {comment.likes} Like
+              {likeComment ? "♥" : "♡"} {comment.likes} Like
             </LikeReply>
             <LikeReply onClick={(e) => showCommentReplies(commentIndex)}>
               ↳ Reply
             </LikeReply>
             <LikeReply onClick={(e) => handleDelete(commentIndex)}>
-  {user_id === comment.user_id && <>&#9746; Delete</>}
-</LikeReply>
+                {user_id === comment.user_id && <>&#9746; Delete</>}
+            </LikeReply>
             <ul>
               {comment.replies && Array.isArray(comment.replies) && comment.replies.length > 0
                 ? comment.replies.map((reply, replyIndex) => (
                     <Replies
                       key={generateCommentReplyId(commentIndex, replyIndex)}
                     >
-                      {reply.reply}
+                     {reply.reply}
                     </Replies>
                   ))
                 : null}

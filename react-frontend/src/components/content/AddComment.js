@@ -9,7 +9,7 @@ export default function AddComment({ animal, setAnimals }) {
   // state to determine if the comment form is displayed
   const [showComment, setshowComment] = useState(false);
   // state to keep track of the like status of a comment
-  const [likeComment, setLikeComment] = useState([]);
+  const [likeComment, setLikeComment] = useState(false);
 
   // update the animal state in the parent component with a new comment and also update the backend
   const [showReply, setShowReply] = useState(animal.comments ? Array(animal.comments.length).fill(false) : []);
@@ -50,14 +50,11 @@ export default function AddComment({ animal, setAnimals }) {
   }
   
 
-  // update the animal state in the parent component with a new comment and also update the backend
-  
-  // function to handle the change in the comment input
   function handleCommentChange(event) {
     setnewComment(event.target.value);
   }
 
-  // function to like a comment and update the json file
+
   
   // function to show the comments when the comment is clicked
   function showCommentReplies(commentIndex) {
@@ -67,23 +64,25 @@ export default function AddComment({ animal, setAnimals }) {
       return isCommentShown;
     });
   }
-  function likeComments(commentIndex) {
-    fetch(`http://localhost:3000/animals/${animal.id}/update_comment_likes?comment_id=${animal.comments[commentIndex].id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((updatedComment) => {
-        setLikeComment((prevLikes) => {
-          const updatedLikes = [...prevLikes];
-          updatedLikes[commentIndex] = true;
-          return updatedLikes;
-        });
-      })
-      .catch((error) => console.error(error));
+
+  function likeComments() {
+    setLikeComment(prev => !prev)
+    // fetch(`http://localhost:3000/animals/${animal.id}/update_comment_likes?comment_id=${animal.comments[commentIndex].id}`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json",
+    //   },
+    // })
+    //   .then((response) => response.json())
+    //   .then((updatedComment) => {
+    //     setLikeComment((prevLikes) => {
+    //       const updatedLikes = [...prevLikes];
+    //       updatedLikes[commentIndex] = true;
+    //       return updatedLikes;
+    //     });
+    //   })
+    //   .catch((error) => console.error(error));
   }
   
   //function to assign the state change to the reply
@@ -101,7 +100,9 @@ export default function AddComment({ animal, setAnimals }) {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify({ reply: { reply: newReply } }),
+        body: JSON.stringify({ 
+          reply: { reply: newReply } 
+        }),
       })
         .then((response) => response.json())
         .then((newReply) => {
