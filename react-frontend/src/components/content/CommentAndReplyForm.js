@@ -1,7 +1,8 @@
-import React,{createContext, useState, useEffect} from "react";
+import React,{ useState, useEffect} from "react";
 import styled from "styled-components";
 import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
+import './CommentAndReplies.css'
 
 
 export default function CommentAndReplyForm({
@@ -16,7 +17,6 @@ export default function CommentAndReplyForm({
   newReply,
   handleReplyChange,
   handleReplySubmit,
-  showComment,
   newComment,
   handleCommentDelete,
   user_id
@@ -80,7 +80,10 @@ export default function CommentAndReplyForm({
             <div className="comments-list" 
             animal={animal} 
             setAnimals={setAnimals}>
-              {commentAuthors[comment.user_id] || `User ${comment.user_id}`}: {comment.comment}
+              <div className='commentAuthor'>
+                {commentAuthors[comment.user_id] || `User ${comment.user_id}`} 
+              </div>
+              {comment.comment}
             </div>
             <LikeReply
               key={generateCommentLikeId(commentIndex)}
@@ -172,6 +175,7 @@ const Replies = styled.li`
 const CommentForm = styled.div`
   display: flex;
   align-items: center;
+  margin-top:10px;
 `;
 
 const PostCommentBtn = styled.button`

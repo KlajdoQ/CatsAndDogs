@@ -20,7 +20,7 @@ function App() {
   function addNewAnimal(newAnimal) {
     setAnimals([...animals, newAnimal]);
   }
-
+console.log(user)
   return (
     <UserContext.Provider value={{ user, setUser }} >
       <div className="app">
@@ -38,7 +38,7 @@ function App() {
             path="/profile"
             element={<Profile setUser={setUser} />}/>
           <Route
-            path="/"
+            path="/content"
             element={user ? (
               <>
               <Header 

@@ -1,51 +1,70 @@
 import React , {useState} from 'react'
 import './SignUp.css'
-export default function SignUp() {
+
+
+
+export default function SignUp({setUser}) {
   let [signUpForm, setSignUpForm] = useState({
     full_name: "",
     email: "",
-    password: ""
+    password: "",
+    image: ""
   });
+  const [imageFile, setImageFile] = useState(null);
 
   
   const handleSignUpSubmit = (event) => {
     event.preventDefault();
-    fetch("http://localhost:3000/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ user: signUpForm }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          // User is registered - redirect to the sign in page
-          window.location.replace("/login");
-        } else if (response.status === 422) {
-          // Registration failed - display validation errors
-          return response.json().then((data) => {
-            throw new Error(data.errors.join(", "));
-          });
-        } else {
-          // Display other error messages returned by the server
-          throw new Error(response.statusText);
-        }
+    const formData = new FormData();
+    formData.append("user[full_name]", signUpForm.full_name);
+    formData.append("user[email]", signUpForm.email);
+    formData.append("user[password]", signUpForm.password);
+    formData.append("user[image]", imageFile);
+  
+    const reader = new FileReader();
+    reader.readAsDataURL(imageFile);
+    reader.onload = () => {
+      const imageUrl = reader.result;
+      localStorage.setItem("userImage", imageUrl);
+      fetch("http://localhost:3000/signup", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: formData,
       })
-      .catch((error) => {
-        console.error(error);
-        // Display error message to the user
-      })
-  }
+        .then((response) => {
+          if (response.ok) {
+            window.location.replace("/login");
+          } else if (response.status === 422) {
+            return response.json().then((data) => {
+              throw new Error(data.errors.join(", "));
+            });
+          } else {
+            throw new Error(response.statusText);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+  };
+  
+  
+  
   
   const handleSignUpFormChange = (event) => {
     const { name, value } = event.target;
     setSignUpForm((prevState) => ({ ...prevState, [name]: value }));
   };
-
+  
   function changeAuthMode (e) {
     e.preventDefault();
     window.location.replace('/login')
   }
+  function handleImageChange (e) {
+    setImageFile(e.target.files[0])
+  };
 
   return (
     <div className="signup-page">
@@ -80,6 +99,15 @@ export default function SignUp() {
               value={signUpForm.email}
               onChange={handleSignUpFormChange}
               name="email"
+            />
+          </div>
+          <div className="form-group">
+          <label htmlFor="image">Image:</label>
+          <input 
+            type="file" 
+            name="image" 
+            id="image" 
+            onChange={handleImageChange}
             />
           </div>
           <div className="form-group mt-3">

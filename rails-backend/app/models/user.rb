@@ -9,4 +9,10 @@ class User < ApplicationRecord
 
     validates :email, presence: true
     validates :password, presence: true
+
+    def image_url
+        if image.attached?
+          rails_blob_path(image, only_path: true)
+        end
+      end
 end

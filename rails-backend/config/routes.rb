@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get '/signup', to: 'users#index'
   delete '/logout', to: 'sessions#destroy'
   #get '/authorized', to: 'users#show'
+  put '/users/:id', to: 'users#update'
+
   
   resources :animals do
     patch '/animals/:id', to: 'animals#update'

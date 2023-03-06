@@ -1,27 +1,25 @@
 import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import UserImg from '../images/search-img.avif'
-
 import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
 
 export default function AnimalForm({addNewAnimal}) {
   const { user = null } = useContext(UserContext); // provide a default value for user
-
-    //Create a state to control the visibility of the modal on page load 
+  
+  //Create a state to control the visibility of the modal on page load 
   const [show, setShow] = useState(false);
-    // State to store the form data
+  // State to store the form data
   const [formData, setFormData] = useState({
     image: '',
     name: '',
     breed: '',
     hobbies: ''
   });
-
+  
   // functions to toggle the visibility of the modal
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+  
   // Function to update the form data in state as the form input values change
   function handleChange(e) {
     setFormData({
@@ -47,12 +45,15 @@ export default function AnimalForm({addNewAnimal}) {
     .then(addNewAnimal)
     handleClose()
   }
- 
+  
+  const userImage = localStorage.getItem("userImage");
   return (
     <>
     {/* Rendering the button to open the modal and the modal itself*/}
     <div className='usrimg-search'>
-      <img src={UserImg} alt="user-img" className='user-img'/>
+    {userImage && (
+            <img className="user-img" src={userImage} alt="User" />
+          )}    
       <input onClick={handleShow} variant="primary" className="search-box"type="text" placeholder='Start a post'/>
     </div>
     {/* Modal component to display the form to add a new animal*/}

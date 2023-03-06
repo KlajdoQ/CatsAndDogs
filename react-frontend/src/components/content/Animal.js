@@ -34,6 +34,7 @@ export default function Animal({animal,
         </button>
         <ShareButton animal={animal} />
       </LikeCommentShare>
+      <br/>
       {showComments ? (
         <AddComment 
         key={animal.image} 
@@ -103,6 +104,7 @@ const LikeCommentShare = styled.div`
   align-items: center;
   justify-content: space-between;
   margin: 10px;
+  margin-top: 5px;
 `;
 
 const AnimalLikes = styled.button`
