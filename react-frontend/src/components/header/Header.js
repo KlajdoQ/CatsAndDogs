@@ -24,7 +24,7 @@ export default function Header({ search, setSearch, setUser }) {
   };
   return (
     <div className="header-div">
-      <Link to="/content">
+      <Link to="/">
         <LogoImg src={Logo} alt="logo" />
       </Link>
       {user ? (

@@ -38,7 +38,7 @@ console.log(user)
             path="/profile"
             element={<Profile setUser={setUser} />}/>
           <Route
-            path="/content"
+            path="/"
             element={user ? (
               <>
               <Header 

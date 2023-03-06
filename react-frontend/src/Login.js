@@ -36,7 +36,7 @@ export default function Login({ setUser}) {
       })
       .then((data) => {
         setUser(data);
-        navigate('/content');
+        navigate('/');
       })
       .catch((error) => {
         console.error(error);
