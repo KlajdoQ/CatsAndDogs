@@ -63,9 +63,16 @@ export default function SignUp({setUser}) {
     window.location.replace('/login')
   }
   function handleImageChange (e) {
-    setImageFile(e.target.files[0])
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        setSignUpForm((prevState) => ({ ...prevState, image: reader.result }));
+      };
+      setImageFile(file);
+    }
   };
-
   return (
     <div className="signup-page">
 

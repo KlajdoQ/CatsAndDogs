@@ -9,9 +9,14 @@
     border-radius: 10px;
     margin-bottom: -4px;
     position:relative;
+    margin-left:30px;
 }
+.author {
+    width:30px;
+    margin-left:20px;
+}
+
 .comment-form {
-    
     display:flex;
     align-items: center;
 }  
@@ -24,4 +29,17 @@
     font-size:13px;
     font-weight:bold;
     background-color: white;
+    width:300px;
+}
+.commentator {
+    width:40px;
+    height:40px;
+    margin-right:5px;
+    border-radius:50%;
+}
+.imgAuthor {
+    display:flex;
+}
+.likeBtn {
+    margin-left:10px;
 }

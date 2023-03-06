@@ -22,6 +22,7 @@ export default function CommentAndReplyForm({
   user_id
 }) {
   const { user} = useContext(UserContext)
+  const userImage = localStorage.getItem("userImage");
 
   const [replyAuthors, setReplyAuthors] = useState({})
   const [commentAuthors, setCommentAuthors] = useState({});
@@ -77,20 +78,29 @@ export default function CommentAndReplyForm({
       {animal.comments &&
         animal.comments?.map((comment, commentIndex) => (
           <div key={generateCommentId(commentIndex)}>
-            <div className="comments-list" 
-            animal={animal} 
-            setAnimals={setAnimals}>
-              <div className='commentAuthor'>
-                {commentAuthors[comment.user_id] || `User ${comment.user_id}`} 
-              </div>
-              {comment.comment}
+            <div className='imgAuthor'>
+                {/* <div className='author'>
+                {userImage && (<img className="commentator" src={userImage} alt="User"/>)}   
+                </div> */}
+                <div className="comments-list" 
+                  animal={animal} 
+                  setAnimals={setAnimals}>
+                  <div className='commentAuthor'>
+                    {commentAuthors[comment.user_id] || `User ${comment.user_id}`} 
+                  </div>
+                  <div className="userImgComment">
+                    {comment.comment}
+                  </div>
+                </div>
             </div>
             <LikeReply
               key={generateCommentLikeId(commentIndex)}
               onClick={() => likeComments(commentIndex)}
             >
               {/* Display a heart icon depending on whether the comment has been liked */}
-              {likeComment ? "♥" : "♡"} {comment.likes} Like
+              <div className='likeBtn'>
+                {likeComment ? "♥" : "♡"} {comment.likes} Like
+              </div>
             </LikeReply>
             <LikeReply onClick={(e) => showCommentReplies(commentIndex)}>
               ↳ Reply
@@ -175,7 +185,7 @@ const Replies = styled.li`
 const CommentForm = styled.div`
   display: flex;
   align-items: center;
-  margin-top:10px;
+
 `;
 
 const PostCommentBtn = styled.button`

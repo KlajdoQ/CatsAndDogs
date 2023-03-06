@@ -87,7 +87,7 @@ export default function Profile({setUser}) {
                     setEdit((prevState) => ({ ...prevState, image: reader.result }));
                   };
                 }}
-                value=""
+              
                 name="image"/>
                   </div>
               </div>
