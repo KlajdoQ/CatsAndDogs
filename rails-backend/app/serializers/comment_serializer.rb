@@ -5,6 +5,5 @@ class CommentSerializer < ActiveModel::Serializer
   def author_name
     object.user&.full_name
   end
-
-
+  
 end

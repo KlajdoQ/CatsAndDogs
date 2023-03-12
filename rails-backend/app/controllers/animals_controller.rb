@@ -1,6 +1,4 @@
 class AnimalsController < ApplicationController
-  #before_action :authenticate_user!, only: [:create_comment, :create_reply, :update_comment_likes, :destroy_comment]
- #attr_reader :current_user
   include ActionController::Cookies
 
 
@@ -54,7 +52,6 @@ class AnimalsController < ApplicationController
   
   def destroy_comment
     comment = Comment.find(params[:comment_id])
-    #comment.user = current_user
     comment.replies.destroy_all
     comment.destroy
     head :no_content
@@ -70,8 +67,8 @@ class AnimalsController < ApplicationController
   end
   
     
-    
-    private
+  
+  private
 
   def comment_params
       params.require(:comment).permit(:comment, :reply, :author_name, :user_id)
