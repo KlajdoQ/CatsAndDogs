@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Paw from '../images/paw.png'
 import AddComment from './AddComment'
 import ShareButton from './ShareButton'
@@ -11,42 +11,90 @@ export default function Animal({animal,
   showCom,
    showComments, 
    setAnimals,
-   setUser
+   setUser, user, addLikes
   }) {
-  const {name, image, hobbies, breed, likes, comments} = animal
 
+    const { id, name, image, hobbies, breed, likes, comments } = animal;
+  const [isLiked, setIsLiked] = useState(likes.some((like) => like.user_id === user.id));
+
+  function handleClick() {
+    const userLikes = likes.filter((like) => like.user_id === user.id);
+    if (userLikes.length === 0) {
+      const newLikes = [...likes, { user_id: user.id }];
+      setIsLiked(true);
+      const updatedAnimal = { ...animal, likes: newLikes };
+      fetch(`http://localhost:3000/animals/${animal.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(updatedAnimal),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          addLikes(data);
+        })
+        .catch((error) => console.log(error));
+    } else {
+      const likeIndex = likes.findIndex((like) => like.user_id === user.id);
+      const newLikes = [
+        ...likes.slice(0, likeIndex),
+        ...likes.slice(likeIndex + 1),
+      ];
+      setIsLiked(false);
+      const updatedAnimal = { ...animal, likes: newLikes };
+      fetch(`http://localhost:3000/animals/${animal.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(updatedAnimal),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          addLikes(data);
+        })
+        .catch((error) => console.log(error));
+    }
+  }
+
+  
   return (
     <AnimalDiv>
       <AnimalImage src={image} alt={name} />
-      <AnimalName>{name}</AnimalName>
-      <AnimalBreed>{breed}</AnimalBreed>
-      <AnimalHobbies>{hobbies}</AnimalHobbies>
+      <AnimalData>
+        <AnimalName>{name}</AnimalName>
+        <AnimalBreed> {breed}</AnimalBreed>
+      </AnimalData>
+      <AnimalHobbies><strong>{name}</strong> likes {hobbies}</AnimalHobbies>
       <LineDiv>
         <Line />
       </LineDiv>
       <LikeCommentShare>
         <AnimalLikes style={likeButtonStyle} onClick={handleClick}>
           <PawImg src={Paw} alt="paw" />
-          {likes.length}  {likesFunction()}
+          {likes.length} {likesFunction()}
         </AnimalLikes>
         <button onClick={showCom} className="btn-comments">
-          {comments && comments.length} {comments && comments.length === 1 ? "Comment" : "Comments"}
+          {comments && comments.length}{" "}
+          {comments && comments.length === 1 ? "Comment" : "Comments"}
         </button>
         <ShareButton animal={animal} />
       </LikeCommentShare>
-      <br/>
+      <br />
       {showComments ? (
-        <AddComment 
-        key={animal.image} 
-        setAnimals={setAnimals} 
-        animal={animal}
-        setUser={setUser}
-         />
+        <AddComment
+          key={animal.image}
+          setAnimals={setAnimals}
+          animal={animal}
+          setUser={setUser}
+        />
       ) : null}
     </AnimalDiv>
-  )
+  );
 }
-
 /*******************************
 *   STYLED COMPONENTS          *
 *******************************/
@@ -54,7 +102,7 @@ const AnimalDiv = styled.div`
   background-color: white;
   margin-bottom:20px;
   border: 1px solid rgb(233, 227, 227);
-  width: 450px;
+  width: 500px;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
@@ -72,14 +120,13 @@ const AnimalImage = styled.img`
 
 const AnimalName = styled.h2`
   padding-left: 20px;
-  padding-top: 10px;
   color: rgb(224, 110, 182);
 `;
 
 const AnimalBreed = styled.h4`
-  font-size: 16px;
+  font-size: 18px;
   padding-left: 20px;
-  color: rgb(178, 173, 173);
+  color: rgb(178, 173, 178);
 `;
 
 const LineDiv = styled.div`
@@ -96,7 +143,7 @@ const Line = styled.p`
 `;
 
 const AnimalHobbies = styled.p`
-  padding-left: 20px;
+  text-align: center;
 `;
 
 const LikeCommentShare = styled.div`
@@ -118,3 +165,12 @@ const AnimalLikes = styled.button`
 const PawImg = styled.img 
 `width:20px;
 margin-right:3px;`
+
+const AnimalData = styled.div `
+display:flex;
+align-items: center;
+justify-content: space-between;
+margin-right:30px;
+margin-top:10px;
+margin-bottom:10px;
+`;

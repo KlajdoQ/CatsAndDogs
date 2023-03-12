@@ -29,7 +29,7 @@ export default function Content({search, animals, setAnimals, addNewAnimal, setU
             animals={filteredAnimals} 
             setAnimals={setAnimals}
             setUser={setUser}/>
-        <CatSection/>
+        {/* <CatSection/> */}
       </ContentDiv>
     </div>
   )

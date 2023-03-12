@@ -28,7 +28,8 @@ export default function Login({ setUser}) {
           return response.json();
         } else if (response.status === 401) {
           // Authentication failed - display error message
-          throw new Error("Invalid email or password");
+          alert("Invalid email or password")
+          throw new Error("Invalid email or password")  
         } else {
           // Display other error messages returned by the server
           throw new Error(response.statusText);
@@ -40,7 +41,6 @@ export default function Login({ setUser}) {
       })
       .catch((error) => {
         console.error(error);
-        // Display error message to the user
       });
   };
   

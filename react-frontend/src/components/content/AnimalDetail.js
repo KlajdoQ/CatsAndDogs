@@ -5,43 +5,12 @@ import { UserContext } from '../contexts/UserContext';
 
 // The AnimalDetail component displays the detailed information about a specific animal
 export default function AnimalDetail({ animal,setUser ,setAnimals}) {
-  const { likes, id } = animal;
+  const { likes} = animal;
   const [isLiked, setIsLiked] = useState(false);
   const [showComments, setshowComments] = useState(false);
   const { user} = useContext(UserContext); 
-  const [animalLikes, setLikes] = useState(animal.likes)
 
   
-
-function handleClick() {
-  let newLikes;
-  if (!isLiked) {
-    newLikes = [...likes, { user_id: user.id }];
-  } else {
-    const likeIndex = likes.findIndex((like) => like.user_id === user.id);
-    newLikes = [...likes.slice(0, likeIndex), ...likes.slice(likeIndex + 1)];
-  }
-  setIsLiked(!isLiked);
-  const updatedAnimal = { ...animal, likes: newLikes };
-  fetch(`http://localhost:3000/animals/${id}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify(updatedAnimal),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      setAnimals((animals) =>
-        animals.map((animal) => (animal.id === data.id ? data : animal))
-      );
-    })
-    .catch((error) => console.log(error));
-}
-  
-
-
   // Determine the correct wording for the likes count (e.g. 1 like or 2 likes)
   function likesFunction() {
     return likes.length === 1 ? "Like" : "Likes";
@@ -56,11 +25,9 @@ function handleClick() {
           return prevAnimal;
         }
       });
-    });
-  }
+    })}
 
   function showCom() {
-    // Toggle the show comments state when clicking on the comment button
     setshowComments((prev) => !prev);
   }
 
@@ -74,13 +41,14 @@ function handleClick() {
     <Animal
       animal={animal}
       likeButtonStyle={likeButtonStyle}
-      handleClick={handleClick}
       likesFunction={likesFunction}
       showCom={showCom}
       showComments={showComments}
       setShowComments={setshowComments}
       setAnimals={setAnimals}
       setUser={setUser}
+      user={user}
+      addLikes={addLikes}
     />
   );
 }

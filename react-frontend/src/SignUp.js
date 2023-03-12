@@ -1,8 +1,6 @@
 import React , {useState} from 'react'
 import './SignUp.css'
 
-
-
 export default function SignUp({setUser}) {
   let [signUpForm, setSignUpForm] = useState({
     full_name: "",
@@ -49,9 +47,6 @@ export default function SignUp({setUser}) {
         });
     };
   };
-  
-  
-  
   
   const handleSignUpFormChange = (event) => {
     const { name, value } = event.target;

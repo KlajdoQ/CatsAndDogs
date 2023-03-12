@@ -1,14 +1,13 @@
 import React , {useState} from 'react'
 import './Profile.css'
 import Header from './components/header/Header'
-
 import { useContext } from 'react';
 import { UserContext } from './components/contexts/UserContext'
 
 
 export default function Profile({setUser}) {
   
-  const { user } = useContext(UserContext); // provide a default value for user
+  const { user } = useContext(UserContext); 
   const [edit, setEdit] = useState(user);
   const [imageFile, setImageFile] = useState(null);
 
@@ -16,7 +15,7 @@ export default function Profile({setUser}) {
     const { name, value } = event.target;
     setEdit(prevState => ({ ...prevState, [name]: value }));
   }
-  console.log(edit)
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData();

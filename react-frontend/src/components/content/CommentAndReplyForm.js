@@ -56,7 +56,6 @@ export default function CommentAndReplyForm({
   // }, [users]);
 
 
-
   // Generate unique IDs for each comment
   const generateCommentId = (index) => `comment-${index}`;
   
@@ -70,7 +69,6 @@ export default function CommentAndReplyForm({
     handleCommentDelete(commentIndex);
   }
 
- 
   // This component renders a form that allows the user to submit comments and replies
   return (
 <form onSubmit={(event) => handleCommentSubmit(event, user)}>
@@ -189,12 +187,13 @@ const CommentForm = styled.div`
 `;
 
 const PostCommentBtn = styled.button`
-  width: 70px;
-  height: 40px;
+  width: 60px;
+  height: 35px;
   background-color: rgb(104, 104, 201);
   color: white;
   border-radius: 5px;
   border: none;
+  margin-bottom:5px;
 `;
 
 const TypeReply = styled.textarea`

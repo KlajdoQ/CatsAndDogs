@@ -125,6 +125,4 @@ export default function AnimalForm({addNewAnimal}) {
     </Modal>
     </>
   )
-  
-  
 }  

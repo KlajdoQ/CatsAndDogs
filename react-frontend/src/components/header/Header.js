@@ -10,10 +10,7 @@ import { UserContext } from '../contexts/UserContext';
 
 export default function Header({ search, setSearch, setUser }) {
   const { user = null } = useContext(UserContext); // provide a default value for user
-
   const userImage = localStorage.getItem("userImage");
-
-
 
   const handleLogout = () => {
     fetch("http://localhost:3000/logout", { method: 'DELETE' })
