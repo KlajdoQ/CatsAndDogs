@@ -33,10 +33,7 @@ export default function Profile({setUser}) {
     })
       .then((response) => {
         if (response.ok) {
-          // User's information is updated successfully
-          // Reset the imageFile state to null
           setImageFile(null);
-          // Update the edit state with the new form data (including the image file)
           setUser({
             ...user,
             full_name: formData.get("user[full_name]"),
@@ -134,12 +131,7 @@ export default function Profile({setUser}) {
               />
             </div>
           </div>
-          {/* <div className="form-group">
-            <label className="col-md-3 control-label">Username:</label>
-            <div className="col-md-8">
-              <input className="form-control" type="text" value="janeuser"/>
-            </div>
-          </div>
+          {/* 
           <div className="form-group">
             <label className="col-md-3 control-label">Confirm password:</label>
             <div className="col-md-8">

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import './AnimalForm.css'
 import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
 

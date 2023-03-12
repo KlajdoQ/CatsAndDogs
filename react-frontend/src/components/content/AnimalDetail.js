@@ -13,33 +13,32 @@ export default function AnimalDetail({ animal,setUser ,setAnimals}) {
 
   
 
-  function handleClick() {
-    let newLikes;
-    if (!isLiked) {
-      newLikes = [...likes, { user_id: user.id }];
-    } else {
-      const likeIndex = likes.findIndex((like) => like.user_id === user.id);
-      newLikes = [...likes.slice(0, likeIndex), ...likes.slice(likeIndex + 1)];
-    }
-    setIsLiked(!isLiked);
-    setLikes(newLikes);
-    fetch(`http://localhost:3000/animals/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({ likes: newLikes, user_id: user.id }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setAnimals((animals) =>
-          animals.map((animal) => (animal.id === data.id ? data : animal))
-        );
-      })
-      .catch((error) => console.log(error));
+function handleClick() {
+  let newLikes;
+  if (!isLiked) {
+    newLikes = [...likes, { user_id: user.id }];
+  } else {
+    const likeIndex = likes.findIndex((like) => like.user_id === user.id);
+    newLikes = [...likes.slice(0, likeIndex), ...likes.slice(likeIndex + 1)];
   }
-  
+  setIsLiked(!isLiked);
+  const updatedAnimal = { ...animal, likes: newLikes };
+  fetch(`http://localhost:3000/animals/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify(updatedAnimal),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      setAnimals((animals) =>
+        animals.map((animal) => (animal.id === data.id ? data : animal))
+      );
+    })
+    .catch((error) => console.log(error));
+}
   
 
 

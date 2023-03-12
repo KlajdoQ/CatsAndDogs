@@ -4,18 +4,15 @@ import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
 
 export default function AddComment({ animal, setAnimals }) {
-  // state to keep track of the new comment being added
-  const [newComment, setnewComment] = useState("");
-  // state to determine if the comment form is displayed
-  const [showComment, setshowComment] = useState(false);
-  // state to keep track of the like status of a comment
-  const [likeComment, setLikeComment] = useState(false);
 
-  // update the animal state in the parent component with a new comment and also update the backend
+  const [newComment, setnewComment] = useState("");
+  const [showComment, setshowComment] = useState(false);
+  const [likeComment, setLikeComment] = useState(false);
   const [showReply, setShowReply] = useState(animal.comments ? Array(animal.comments.length).fill(false) : []);
   const [newReply, setNewReply] = useState(animal.comments ? Array(animal.comments.length).fill("") : []);
   const { user} = useContext(UserContext)
 
+  
   function handleCommentSubmit(event) {
     event.preventDefault();
     if (newComment) {
@@ -67,22 +64,6 @@ export default function AddComment({ animal, setAnimals }) {
 
   function likeComments() {
     setLikeComment(prev => !prev)
-    // fetch(`http://localhost:3000/animals/${animal.id}/update_comment_likes?comment_id=${animal.comments[commentIndex].id}`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Accept: "application/json",
-    //   },
-    // })
-    //   .then((response) => response.json())
-    //   .then((updatedComment) => {
-    //     setLikeComment((prevLikes) => {
-    //       const updatedLikes = [...prevLikes];
-    //       updatedLikes[commentIndex] = true;
-    //       return updatedLikes;
-    //     });
-    //   })
-    //   .catch((error) => console.error(error));
   }
   
   //function to assign the state change to the reply
@@ -171,12 +152,11 @@ export default function AddComment({ animal, setAnimals }) {
       showReply={showReply}
       newReply={newReply}
       handleReplyChange={handleReplyChange}
-
       handleCommentChange={handleCommentChange}
       handleReplySubmit={handleReplySubmit}
       showComment={showComment}
       handleCommentDelete={handleCommentDelete}
-    user_id={user.id}
+      user_id={user.id}
     />
   );
 }

@@ -1,7 +1,6 @@
 // import necessary components and libraries
 import React, {useState} from 'react';
 import './App.css'
-import img from './components/images/login-page.avif'
 import Header from './components/header/Header'
 import Content from './components/content/Content'
 import Footer from './components/Footer'
@@ -20,7 +19,7 @@ function App() {
   function addNewAnimal(newAnimal) {
     setAnimals([...animals, newAnimal]);
   }
-console.log(user)
+
   return (
     <UserContext.Provider value={{ user, setUser }} >
       <div className="app">
