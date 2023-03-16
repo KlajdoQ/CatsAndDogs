@@ -16,6 +16,9 @@ function App() {
   const [search, setSearch] = useState("");
   const [user, setUser] = useState(null);
 
+  
+  
+  
   function addNewAnimal(newAnimal) {
     setAnimals([...animals, newAnimal]);
   }

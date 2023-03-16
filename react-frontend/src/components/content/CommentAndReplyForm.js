@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import './CommentAndReplies.css'
+import Modal from 'react-bootstrap/Modal';
 
 
 export default function CommentAndReplyForm({
@@ -19,14 +20,19 @@ export default function CommentAndReplyForm({
   handleReplySubmit,
   newComment,
   handleCommentDelete,
-  user_id
+  user_id,
+  setUser
 }) {
   const { user} = useContext(UserContext)
   const userImage = localStorage.getItem("userImage");
 
-  const [replyAuthors, setReplyAuthors] = useState({})
   const [commentAuthors, setCommentAuthors] = useState({});
   const [users, setUsers] = useState([]);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const [selectedUser, setSelectedUser] = useState(null);
+
 
   useEffect(() => {
     fetch('http://localhost:3000/users')
@@ -69,6 +75,15 @@ export default function CommentAndReplyForm({
     handleCommentDelete(commentIndex);
   }
 
+
+
+
+  function handleCommentAuthorClick(commentUserId) {
+    setSelectedUser(commentUserId);
+    setShow(true)
+  }
+
+
   // This component renders a form that allows the user to submit comments and replies
   return (
 <form onSubmit={(event) => handleCommentSubmit(event, user)}>
@@ -83,7 +98,9 @@ export default function CommentAndReplyForm({
                 <div className="comments-list" 
                   animal={animal} 
                   setAnimals={setAnimals}>
-                  <div className='commentAuthor'>
+                  <div className='commentAuthor' onClick={() => handleCommentAuthorClick(comment.user_id)}>
+                 
+
                     {commentAuthors[comment.user_id] || `User ${comment.user_id}`} 
                   </div>
                   <div className="userImgComment">
@@ -91,6 +108,19 @@ export default function CommentAndReplyForm({
                   </div>
                 </div>
             </div>
+            <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
+            <Modal.Header closeButton>
+            </Modal.Header>
+            <Modal.Body>
+              <div>
+                {/* <img src={user.image} alt={user.full_name} /> */}
+                <h2>Would you like to say "Hi" to {user.full_name}</h2>
+                <button>Send Message</button>
+              </div>
+            </Modal.Body>
+          </Modal>
+            {/* {selectedUser && <UserDetails show={show} handleClose={handleClose} user_id={selectedUser} />} */}
+
             <LikeReply
               key={generateCommentLikeId(commentIndex)}
               onClick={() => likeComments(commentIndex)}
@@ -138,6 +168,7 @@ export default function CommentAndReplyForm({
             ) : null}
           </div>
         ))}
+
       {/* If `showComment` is truthy and there is text on the textarea, render the new comment */}
       {/* {showComment && newComment && <NewReplyLi key="new-comment">{newComment}</NewReplyLi>} */}
       <div className="comment-form">
