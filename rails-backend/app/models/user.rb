@@ -11,8 +11,8 @@ class User < ApplicationRecord
     validates :password, presence: true
 
     def image_url
-        if image.attached?
-          rails_blob_path(image, only_path: true)
-        end
+      if image.present? && image.attached?
+        rails_blob_path(image, only_path: true)
       end
+    end
 end

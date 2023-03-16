@@ -12,7 +12,7 @@ class UsersController < ApplicationController
 
   def show
     user = User.find(params[:id])
-    render json: user.as_json(only: [:id, :email, :full_name], methods: [:image_url])
+    render json: user.as_json(only: [:id, :email, :full_name], methods: [:image_url, :image])
   end
 
   def create
