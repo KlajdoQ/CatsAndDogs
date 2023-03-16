@@ -15,6 +15,7 @@ class UsersController < ApplicationController
     render json: user.as_json(only: [:id, :email, :full_name], methods: [:image_url, :image])
   end
 
+
   def create
     user = User.new(user_params)
     if user.save
@@ -38,6 +39,7 @@ class UsersController < ApplicationController
   
   private
 
+  
   def user_params
     params.require(:user).permit(:full_name, :email, :password, :image)
   end
