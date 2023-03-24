@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_02_021500) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_17_154526) do
   create_table "animals", force: :cascade do |t|
     t.string "name"
     t.string "image"
@@ -40,12 +40,27 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_02_021500) do
     t.index ["animal_id"], name: "index_comments_on_animal_id"
   end
 
+  create_table "conversations", force: :cascade do |t|
+    t.integer "sender_id"
+    t.integer "receiver_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "likes", force: :cascade do |t|
     t.integer "animal_id"
     t.integer "user_id"
     t.integer "likes", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "replies", force: :cascade do |t|
@@ -76,5 +91,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_02_021500) do
   add_foreign_key "animals", "users"
   add_foreign_key "comment_likes", "comments"
   add_foreign_key "comments", "animals"
+  add_foreign_key "messages", "users"
   add_foreign_key "replies", "comments"
 end

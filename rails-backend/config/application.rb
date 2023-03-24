@@ -13,6 +13,7 @@ require "action_controller/railtie"
 require "action_view/railtie"
 # require "action_cable/engine"
 require "rails/test_unit/railtie"
+require "action_cable/engine"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -20,9 +21,18 @@ Bundler.require(*Rails.groups)
 
 module RailsBackend
   class Application < Rails::Application
+    config.action_cable.allowed_request_origins = [/http:\/\/*/, /https:\/\/*/]
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
-
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*',
+          headers: :any,
+          methods: %i[get post put patch delete options head]
+      end
+    end
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
