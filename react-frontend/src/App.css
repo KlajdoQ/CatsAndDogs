@@ -1,7 +1,9 @@
 .login-to-view {
     position:relative;
 }
-
+/* .app {
+    position:relative;
+} */
 .error-msg {
     background-image: url('./components/images/login-page.avif');
     position:absolute;

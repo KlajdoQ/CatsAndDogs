@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
 
 // The AnimalDetail component displays the detailed information about a specific animal
-export default function AnimalDetail({ animal,setUser ,setAnimals}) {
+export default function AnimalDetail({ newMessage, setNewMessage, animal,setUser ,setAnimals}) {
   const { likes} = animal;
   const [isLiked, setIsLiked] = useState(false);
   const [showComments, setshowComments] = useState(false);
@@ -49,6 +49,8 @@ export default function AnimalDetail({ animal,setUser ,setAnimals}) {
       setUser={setUser}
       user={user}
       addLikes={addLikes}
+      newMessage={newMessage}
+      setNewMessage={setNewMessage}
     />
   );
 }

@@ -11,7 +11,9 @@ export default function Animal({animal,
   showCom,
    showComments, 
    setAnimals,
-   setUser, user, addLikes
+   setUser, user, addLikes,
+   newMessage, 
+   setNewMessage
   }) {
 
     const { id, name, image, hobbies, breed, likes, comments } = animal;
@@ -90,6 +92,8 @@ export default function Animal({animal,
           setAnimals={setAnimals}
           animal={animal}
           setUser={setUser}
+          newMessage={newMessage}
+          setNewMessage={setNewMessage}
         />
       ) : null}
     </AnimalDiv>

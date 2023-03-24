@@ -1,10 +1,32 @@
-import React,{ useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useContext } from 'react';
-import { UserContext } from '../contexts/UserContext';
-import './CommentAndReplies.css'
-import Modal from 'react-bootstrap/Modal';
+import { useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
+import "./CommentAndReplies.css";
+import Modal from "react-bootstrap/Modal";
+import { CableContext } from "./CableContext";
+import ChatModal from "./ChatModal";
 
+import Button from "@mui/material/Button";
+import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+
+import createChatChannel from '../javascript/channels/chat_channel'
+import ChatWindowsContext from './ChatWindowsContext';
+
+
+
+const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#f5f5f9",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: 220,
+    fontSize: "12px",
+    border: "1px solid #dadde9",
+  },
+}));
 
 export default function CommentAndReplyForm({
   handleCommentChange,
@@ -21,9 +43,11 @@ export default function CommentAndReplyForm({
   newComment,
   handleCommentDelete,
   user_id,
-  setUser
+  setUser,
+  newMessage, 
+  setNewMessage
 }) {
-  const { user} = useContext(UserContext)
+  const { user } = useContext(UserContext);
   const userImage = localStorage.getItem("userImage");
 
   const [commentAuthors, setCommentAuthors] = useState({});
@@ -32,10 +56,53 @@ export default function CommentAndReplyForm({
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [showChatModal, setShowChatModal] = useState(false);
+  const [selectedAuthor, setSelectedAuthor] = useState(null);
 
+  const handleChatButtonClick = (author, shouldOpen, isSendButton, message) => {
+    if (shouldOpen) {
+      setSelectedAuthor(author);
+      setShowChatModal({ show: true, position: "fixed" });
+    } else if (!isSendButton) {
+      setShowChatModal(false);
+    }
+    if (newMessage) {
+      setNewMessage(null);
+    } else if (message && !showChatModal.show) {
+      setNewMessage(message);
+    }
+  };
+  
+const handleCloseChatModal = () => {
+  console.log("handleCloseChatModal called");
+  setShowChatModal(false);
+};
+  const { cable } = useContext(CableContext);
+  
+  useEffect(() => {
+    if (cable && Object.keys(commentAuthors).length > 0) {
+      const chatChannel = createChatChannel(
+        (data) => {
+          if (data.user_id !== user.id) {
+            handleChatButtonClick({
+              id: data.user_id,
+              full_name: commentAuthors[data.user_id],
+            }, true);
+          }
+        },
+        user.id
+      );
+  
+      return () => {
+        cable.subscriptions.remove(chatChannel);
+      };
+    }
+  }, [cable, user, commentAuthors]);
+  
+  
 
   useEffect(() => {
-    fetch('http://localhost:3000/users')
+    fetch("http://localhost:3000/users")
       .then((response) => response.json())
       .then((data) => {
         setUsers(data);
@@ -44,89 +111,109 @@ export default function CommentAndReplyForm({
         console.error(error);
       });
   }, []);
-  
+
   useEffect(() => {
     const authors = {};
     users.forEach((user) => {
       authors[user.id] = user.full_name;
     });
-    setCommentAuthors(authors)
+    setCommentAuthors(authors);
   }, [users]);
-  
-  // useEffect(() => {
-  //   const authors = {};
-  //   users.forEach((user) => {
-  //     authors[user.id] = user.full_name;
-  //   });
-  //   setReplyAuthors(authors)
-  // }, [users]);
 
 
   // Generate unique IDs for each comment
   const generateCommentId = (index) => `comment-${index}`;
-  
+
   // Generate unique IDs for each comment like
   const generateCommentLikeId = (commentIndex) =>
-  `comment-${commentIndex}-like`;
+    `comment-${commentIndex}-like`;
   const generateCommentReplyId = (commentIndex, replyIndex) =>
-  `comment-${commentIndex}-reply-${replyIndex}`;
-  
+    `comment-${commentIndex}-reply-${replyIndex}`;
+
   function handleDelete(commentIndex) {
     handleCommentDelete(commentIndex);
   }
 
-
-
-
   function handleCommentAuthorClick(commentUserId) {
     setSelectedUser(commentUserId);
-    setShow(true)
+    setShow(true);
   }
 
-
-  // This component renders a form that allows the user to submit comments and replies
   return (
-<form onSubmit={(event) => handleCommentSubmit(event, user)}>
+    <form onSubmit={(event) => handleCommentSubmit(event, user)}>
       {/* Map over the comments in the `animal` object and render a `CommentsList` component for each comment */}
       {animal.comments &&
         animal.comments?.map((comment, commentIndex) => (
           <div key={generateCommentId(commentIndex)}>
-            <div className='imgAuthor'>
-                {/* <div className='author'>
+            <div className="imgAuthor">
+              {/* <div className='author'>
                 {userImage && (<img className="commentator" src={userImage} alt="User"/>)}   
                 </div> */}
-                <div className="comments-list" 
-                  animal={animal} 
-                  setAnimals={setAnimals}>
-                  <div className='commentAuthor' onClick={() => handleCommentAuthorClick(comment.user_id)}>
-                 
+              <div
+                className="comments-list"
+                animal={animal}
+                setAnimals={setAnimals}
+              >
+                <div
+                  className="commentAuthor"
+                  onClick={() => handleCommentAuthorClick(comment.user_id)}
+                >
+                  <HtmlTooltip
+                    title={
+                      <React.Fragment>
+                        <Typography color="inherit">
+                          Send a message to{" "}
+                          {commentAuthors[comment.user_id] ||
+                            `User ${comment.user_id}`}
+                        </Typography>
+                        <button
+  onClick={() => {
+    handleChatButtonClick(
+      {
+        id: comment.user_id,
+        full_name: commentAuthors[comment.user_id],
+      },
+      true,
+      true
+    );
+  }}
+>
+  Chat
+</button>
 
-                    {commentAuthors[comment.user_id] || `User ${comment.user_id}`} 
-                  </div>
-                  <div className="userImgComment">
-                    {comment.comment}
-                  </div>
+                      </React.Fragment>
+                    }
+                  >
+                    <Button>
+                      {commentAuthors[comment.user_id] ||
+                        `User ${comment.user_id}`}
+                    </Button>
+                  </HtmlTooltip>
                 </div>
-            </div>
-            <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
-            <Modal.Header closeButton>
-            </Modal.Header>
-            <Modal.Body>
-              <div>
-                {/* <img src={user.image} alt={user.full_name} /> */}
-                <h2>Would you like to say "Hi" to {user.full_name}</h2>
-                <button>Send Message</button>
+                <div className="userImgComment">{comment.comment}</div>
               </div>
-            </Modal.Body>
-          </Modal>
-            {/* {selectedUser && <UserDetails show={show} handleClose={handleClose} user_id={selectedUser} />} */}
+            </div>
+            {showChatModal && user && selectedAuthor && (
+  <ChatModal
+    currentUser={user && { id: user.id }}
+    author={selectedAuthor && { id: selectedAuthor.id }}
+    handleClose={handleCloseChatModal}
+    position={showChatModal.position}
+    handleChatButtonClick={handleChatButtonClick}
+    newMessage={newMessage}
+    setNewMessage={setNewMessage}
+    show={showChatModal.show}
+  />
+)}
 
+
+            {/* {selectedUser && <UserDetails show={show} handleClose={handleClose} user_id={selectedUser} />} */}
             <LikeReply
               key={generateCommentLikeId(commentIndex)}
               onClick={() => likeComments(commentIndex)}
             >
               {/* Display a heart icon depending on whether the comment has been liked */}
-              <div className='likeBtn'>
+              <div className="likeBtn">
                 {likeComment ? "♥" : "♡"} {comment.likes} Like
               </div>
             </LikeReply>
@@ -134,20 +221,21 @@ export default function CommentAndReplyForm({
               ↳ Reply
             </LikeReply>
             <LikeReply onClick={(e) => handleDelete(commentIndex)}>
-                {user_id === comment.user_id && <>&#9746; Delete</>}
+              {user_id === comment.user_id && <>&#9746; Delete</>}
             </LikeReply>
             <ul>
-              {comment.replies && Array.isArray(comment.replies) && comment.replies.length > 0
+              {comment.replies &&
+              Array.isArray(comment.replies) &&
+              comment.replies.length > 0
                 ? comment.replies.map((reply, replyIndex) => (
                     <Replies
                       key={generateCommentReplyId(commentIndex, replyIndex)}
                     >
-                     {reply.reply}
+                      {reply.reply}
                     </Replies>
                   ))
                 : null}
             </ul>
-
             {/* If `showReply[commentIndex]` is truthy, render a form for submitting a reply to the comment */}
             {showReply[commentIndex] ? (
               <CommentForm>
@@ -191,7 +279,6 @@ export default function CommentAndReplyForm({
  *   STYLED COMPONENTS          *
  *******************************/
 
-
 const LikeReply = styled.button`
   border: none;
   font-size: 12px;
@@ -214,7 +301,6 @@ const Replies = styled.li`
 const CommentForm = styled.div`
   display: flex;
   align-items: center;
-
 `;
 
 const PostCommentBtn = styled.button`
@@ -224,7 +310,7 @@ const PostCommentBtn = styled.button`
   color: white;
   border-radius: 5px;
   border: none;
-  margin-bottom:5px;
+  margin-bottom: 5px;
 `;
 
 const TypeReply = styled.textarea`

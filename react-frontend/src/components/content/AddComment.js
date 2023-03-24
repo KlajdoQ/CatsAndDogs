@@ -3,7 +3,7 @@ import CommentAndReplyForm from "./CommentAndReplyForm";
 import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
 
-export default function AddComment({ animal, setAnimals , setUser}) {
+export default function AddComment({ newMessage, setNewMessage, animal, setAnimals , setUser}) {
 
   const [newComment, setnewComment] = useState("");
   const [showComment, setshowComment] = useState(false);
@@ -158,6 +158,8 @@ export default function AddComment({ animal, setAnimals , setUser}) {
       handleCommentDelete={handleCommentDelete}
       user_id={user.id}
       setUser={setUser}
+      newMessage={newMessage}
+      setNewMessage={setNewMessage}
     />
   );
 }

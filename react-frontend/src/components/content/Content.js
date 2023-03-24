@@ -4,9 +4,9 @@ import styled from 'styled-components'
 import CatSection from '../cats/CatSection'
 import AnimalForm from './AnimalForm'
 import './Content.css'
+import ChatModal from './ChatModal'
 
-
-export default function Content({search, animals, setAnimals, addNewAnimal, setUser}) {
+export default function Content({newMessage, setNewMessage, search, animals, setAnimals, addNewAnimal, setUser}) {
   
   useEffect(() => {
     fetch("http://localhost:3000/animals")
@@ -28,8 +28,11 @@ export default function Content({search, animals, setAnimals, addNewAnimal, setU
         <AnimalList 
             animals={filteredAnimals} 
             setAnimals={setAnimals}
-            setUser={setUser}/>
+            setUser={setUser}
+            newMessage={newMessage}
+            setNewMessage={setNewMessage}/>
         {/* <CatSection/> */}
+     
       </ContentDiv>
     </div>
   )
