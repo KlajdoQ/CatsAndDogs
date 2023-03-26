@@ -5,7 +5,7 @@ class CreateAnimals < ActiveRecord::Migration[7.0]
       t.string :image
       t.string :breed
       t.string :hobbies
-      t.integer :likes
+      t.integer :likes, default: 0
       t.references :user, null: false, foreign_key: true
 
 

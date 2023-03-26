@@ -15,7 +15,11 @@ Rails.application.routes.draw do
     patch '/animals/:id', to: 'animals#update'
     post 'comments', to: 'animals#create_comment'
     post 'comments/:comment_id/replies', to: 'animals#create_reply'
-    post '/update_comment_likes', to: 'animals#update_comment_likes'
+    member do
+      post 'update_comment_likes', to: 'animals#update_comment_likes'
+    end
     delete 'comments/:comment_id', to: 'animals#destroy_comment'
+    post ':id/update_likes', to: 'animals#update_likes'
+
   end
 end

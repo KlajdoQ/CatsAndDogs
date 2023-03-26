@@ -20,15 +20,30 @@ class AnimalsController < ApplicationController
   def update
     animal = Animal.find(params[:id])
     user_id = params[:user_id]
-    likes = animal.likes.where(user_id: user_id)
-    if likes.exists?
-      likes.destroy_all
+    like = animal.likes.find_by(user_id: user_id)
+  
+    if like
+      like.destroy
     else
-      like = Like.new(user_id: user_id)
-      animal.likes << like
+      like = animal.likes.create(user_id: user_id)
     end
-    animal.save
+  
+    animal.reload # To get the updated count of likes
     render json: animal, include: :user
+  end
+
+  def update_likes
+    animal = Animal.find(params[:animal_id])
+    user_id = params[:user_id]
+    like = animal.likes.find_by(user_id: user_id)
+  
+    if like
+      like.destroy
+    else
+      like = animal.likes.create(user_id: user_id)
+    end
+  
+    render json: { likes_count: animal.likes.count }
   end
   
   ####################
@@ -45,9 +60,16 @@ class AnimalsController < ApplicationController
 
   def update_comment_likes
     comment = Comment.find(params[:comment_id])
-    comment_like = comment.comment_likes.create
-    comment_like.user = current_user
-    render json: comment, include: :comment_likes
+    user_id = params[:user_id]
+    comment_like = comment.comment_likes.find_by(user_id: user_id)
+  
+    if comment_like
+      comment_like.destroy
+    else
+      comment_like = comment.comment_likes.create(user_id: user_id)
+    end
+  
+    render json: { comment_likes_count: comment.comment_likes.count }
   end
   
   def destroy_comment
