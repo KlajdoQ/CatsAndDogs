@@ -1,71 +1,110 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Paw from '../images/paw.png'
 import AddComment from './AddComment'
 import ShareButton from './ShareButton'
 import styled from 'styled-components'
+import { useContext } from 'react';
+import { UserContext } from '../contexts/UserContext';
+import './Animal.css'
 
-export default function Animal({animal, 
-  likeButtonStyle, 
-  handleClick, 
-  likesFunction, 
-  showCom,
-   showComments, 
-   setAnimals,
-   setUser, user, addLikes,
-   newMessage, 
-   setNewMessage
-  }) {
 
+
+export default function Animal({animal,setAnimals,setUser, addLikes,newMessage,setNewMessage,}) {
+    
+    const { user} = useContext(UserContext); 
     const { id, name, image, hobbies, breed, likes, comments } = animal;
-  const [isLiked, setIsLiked] = useState(likes.some((like) => like.user_id === user.id));
-
+    const [showComments, setshowComments] = useState(false);
+    const [isLiked, setIsLiked] = useState(false);
+  
   function handleClick() {
-    const userLikes = likes.filter((like) => like.user_id === user.id);
+    const userLikes = animal.likes.filter((like) => like.user_id === user.id);
     if (userLikes.length === 0) {
-      const newLikes = [...likes, { user_id: user.id }];
+      const newLikes = [...animal.likes, { user_id: user.id }];
       setIsLiked(true);
       const updatedAnimal = { ...animal, likes: newLikes };
-      fetch(`http://localhost:3000/animals/${animal.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(updatedAnimal),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          addLikes(data);
-        })
-        .catch((error) => console.log(error));
+      setAnimals((prevAnimals) => {
+        return prevAnimals.map((prevAnimal) => {
+          if (prevAnimal.id === updatedAnimal.id) {
+            return updatedAnimal;
+          } else {
+            return prevAnimal;
+      }
+        });
+      });
+      addLikes(updatedAnimal);
     } else {
-      const likeIndex = likes.findIndex((like) => like.user_id === user.id);
+      const likeIndex = animal.likes.findIndex(
+        (like) => like.user_id === user.id
+      );
       const newLikes = [
-        ...likes.slice(0, likeIndex),
-        ...likes.slice(likeIndex + 1),
+        ...animal.likes.slice(0, likeIndex),
+        ...animal.likes.slice(likeIndex + 1),
       ];
       setIsLiked(false);
       const updatedAnimal = { ...animal, likes: newLikes };
-      fetch(`http://localhost:3000/animals/${animal.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(updatedAnimal),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          addLikes(data);
-        })
-        .catch((error) => console.log(error));
+          setAnimals((prevAnimals) => {
+            return prevAnimals.map((prevAnimal) => {
+              if (prevAnimal.id === updatedAnimal.id) {
+                return updatedAnimal;
+              } else {
+                return prevAnimal;
+              }
+            });
+          });
+      addLikes(updatedAnimal);
     }
-  }
-
+    }
+    
+    function likesFunction() {
+      return likes.length === 1 ? "Like" : "Likes";
+    }
   
+    async function addLikes(updatedAnimal) {
+      try {
+        const response = await fetch(`/animals/${updatedAnimal.id}/update_likes`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ user_id: user.id }),
+        });
+    
+        if (!response.ok) {
+          throw new Error(`Request failed with status code ${response.status}`);
+        }
+    
+        const data = await response.json();
+        const { likes_count } = data;
+    
+        setAnimals((prevAnimals) => {
+          return prevAnimals.map((prevAnimal) => {
+            if (prevAnimal.id === updatedAnimal.id) {
+              return { ...prevAnimal, likes: Array(likes_count).fill({ user_id: user.id }) };
+            } else {
+              return prevAnimal;
+            }
+          });
+        });
+      } catch (error) {
+        console.error('Error updating likes:', error);
+      }
+    }
+  
+  
+    function showCom() {
+      setshowComments((prev) => !prev);
+    }
+  
+  
+    const likeButtonStyle = {
+      backgroundColor: isLiked ? "red" : "white",
+      color: isLiked ? "white" : "red",
+    };
+
+
   return (
-    <AnimalDiv>
-      <AnimalImage src={image} alt={name} />
+    <div className="animalDiv">
+      <img className="animalImg" src={image} alt={name} />
       <AnimalData>
         <AnimalName>{name}</AnimalName>
         <AnimalBreed> {breed}</AnimalBreed>
@@ -75,10 +114,10 @@ export default function Animal({animal,
         <Line />
       </LineDiv>
       <LikeCommentShare>
-        <AnimalLikes style={likeButtonStyle} onClick={handleClick}>
+        <div className="animalLikes" style={likeButtonStyle} onClick={handleClick}>
           <PawImg src={Paw} alt="paw" />
           {likes.length} {likesFunction()}
-        </AnimalLikes>
+        </div>
         <button onClick={showCom} className="btn-comments">
           {comments && comments.length}{" "}
           {comments && comments.length === 1 ? "Comment" : "Comments"}
@@ -94,33 +133,15 @@ export default function Animal({animal,
           setUser={setUser}
           newMessage={newMessage}
           setNewMessage={setNewMessage}
+          handleClick={handleClick}
         />
       ) : null}
-    </AnimalDiv>
+    </div>
   );
 }
 /*******************************
 *   STYLED COMPONENTS          *
 *******************************/
-const AnimalDiv = styled.div`
-  background-color: white;
-  margin-bottom:20px;
-  border: 1px solid rgb(233, 227, 227);
-  width: 500px;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
-  padding-bottom: 20px;
-  position: relative;
-  @media (max-width:600px) {
-    width:350px;
-    margin-top:40px;
-`;
-
-const AnimalImage = styled.img`
-  width: 100%;
-  height: 290px;
-`;
 
 const AnimalName = styled.h2`
   padding-left: 20px;
@@ -156,14 +177,6 @@ const LikeCommentShare = styled.div`
   justify-content: space-between;
   margin: 10px;
   margin-top: 5px;
-`;
-
-const AnimalLikes = styled.button`
-  text-align: center;
-  border: 2px solid rgb(150, 144, 144);
-  padding: 3px 5px;
-  border-radius: 5px;
-  font-weight: bold;
 `;
 
 const PawImg = styled.img 

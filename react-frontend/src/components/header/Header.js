@@ -27,30 +27,8 @@ export default function Header({ search, setSearch, setUser }) {
   const handleMessagesClick = () => {
     
         setShowChatModal(true);
-    setHasReceivedMessage(false); // reset the hasReceivedMessage state
+    setHasReceivedMessage(false); 
   };
-  
-
-  // useEffect(() => {
-  //   if (user) {
-  //     fetch(`http://localhost:3000/messages?user_id=${user.id}`)
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         if (data.length > 0) {
-  //           setHasReceivedMessage(true);
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error(error);
-  //       });
-  //   }
-  // }, [user]);
-  
-  // const handleMessagesClick = () => {
-  //   if (hasReceivedMessage) {
-  //     setShowChatModal(true);
-  //   }
-  // };
 
 
   return (

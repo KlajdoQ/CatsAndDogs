@@ -3,18 +3,12 @@ import styled from "styled-components";
 import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import "./CommentAndReplies.css";
-import Modal from "react-bootstrap/Modal";
 import { CableContext } from "./CableContext";
 import ChatModal from "./ChatModal";
-
 import Button from "@mui/material/Button";
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-
-import createChatChannel from '../javascript/channels/chat_channel'
-import ChatWindowsContext from './ChatWindowsContext';
-
-
+import createChatChannel from "../javascript/channels/chat_channel";
 
 const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -33,8 +27,9 @@ export default function CommentAndReplyForm({
   handleCommentSubmit,
   animal,
   setAnimals,
-  likeComments,
   likeComment,
+  likedComments,
+  handleLikeComments,
   showCommentReplies,
   showReply,
   newReply,
@@ -44,8 +39,8 @@ export default function CommentAndReplyForm({
   handleCommentDelete,
   user_id,
   setUser,
-  newMessage, 
-  setNewMessage
+  newMessage,
+  setNewMessage,
 }) {
   const { user } = useContext(UserContext);
   const userImage = localStorage.getItem("userImage");
@@ -53,8 +48,6 @@ export default function CommentAndReplyForm({
   const [commentAuthors, setCommentAuthors] = useState({});
   const [users, setUsers] = useState([]);
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   const [selectedUser, setSelectedUser] = useState(null);
   const [showChatModal, setShowChatModal] = useState(false);
   const [selectedAuthor, setSelectedAuthor] = useState(null);
@@ -72,34 +65,32 @@ export default function CommentAndReplyForm({
       setNewMessage(message);
     }
   };
-  
-const handleCloseChatModal = () => {
-  console.log("handleCloseChatModal called");
-  setShowChatModal(false);
-};
+
+  const handleCloseChatModal = () => {
+    console.log("handleCloseChatModal called");
+    setShowChatModal(false);
+  };
   const { cable } = useContext(CableContext);
-  
+
   useEffect(() => {
     if (cable && Object.keys(commentAuthors).length > 0) {
-      const chatChannel = createChatChannel(
-        (data) => {
-          if (data.user_id !== user.id) {
-            handleChatButtonClick({
+      const chatChannel = createChatChannel((data) => {
+        if (data.user_id !== user.id) {
+          handleChatButtonClick(
+            {
               id: data.user_id,
               full_name: commentAuthors[data.user_id],
-            }, true);
-          }
-        },
-        user.id
-      );
-  
+            },
+            true
+          );
+        }
+      }, user.id);
+
       return () => {
         cable.subscriptions.remove(chatChannel);
       };
     }
   }, [cable, user, commentAuthors]);
-  
-  
 
   useEffect(() => {
     fetch("http://localhost:3000/users")
@@ -119,7 +110,6 @@ const handleCloseChatModal = () => {
     });
     setCommentAuthors(authors);
   }, [users]);
-
 
   // Generate unique IDs for each comment
   const generateCommentId = (index) => `comment-${index}`;
@@ -167,20 +157,19 @@ const handleCloseChatModal = () => {
                             `User ${comment.user_id}`}
                         </Typography>
                         <button
-  onClick={() => {
-    handleChatButtonClick(
-      {
-        id: comment.user_id,
-        full_name: commentAuthors[comment.user_id],
-      },
-      true,
-      true
-    );
-  }}
->
-  Chat
-</button>
-
+                          onClick={() => {
+                            handleChatButtonClick(
+                              {
+                                id: comment.user_id,
+                                full_name: commentAuthors[comment.user_id],
+                              },
+                              true,
+                              true
+                            );
+                          }}
+                        >
+                          Chat
+                        </button>
                       </React.Fragment>
                     }
                   >
@@ -194,27 +183,26 @@ const handleCloseChatModal = () => {
               </div>
             </div>
             {showChatModal && user && selectedAuthor && (
-  <ChatModal
-    currentUser={user && { id: user.id }}
-    author={selectedAuthor && { id: selectedAuthor.id }}
-    handleClose={handleCloseChatModal}
-    position={showChatModal.position}
-    handleChatButtonClick={handleChatButtonClick}
-    newMessage={newMessage}
-    setNewMessage={setNewMessage}
-    show={showChatModal.show}
-  />
-)}
-
+              <ChatModal
+                currentUser={user && { id: user.id }}
+                author={selectedAuthor && { id: selectedAuthor.id }}
+                handleClose={handleCloseChatModal}
+                position={showChatModal.position}
+                handleChatButtonClick={handleChatButtonClick}
+                newMessage={newMessage}
+                setNewMessage={setNewMessage}
+                show={showChatModal.show}
+              />
+            )}
 
             {/* {selectedUser && <UserDetails show={show} handleClose={handleClose} user_id={selectedUser} />} */}
             <LikeReply
               key={generateCommentLikeId(commentIndex)}
-              onClick={() => likeComments(commentIndex)}
+              onClick={() => handleLikeComments(commentIndex)}
             >
               {/* Display a heart icon depending on whether the comment has been liked */}
-              <div className="likeBtn">
-                {likeComment ? "♥" : "♡"} {comment.likes} Like
+              <div className="likeBtn" >
+              {likedComments.includes(commentIndex) ? "♥" : "♡"} Like
               </div>
             </LikeReply>
             <LikeReply onClick={(e) => showCommentReplies(commentIndex)}>

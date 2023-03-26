@@ -33,7 +33,7 @@ export default function App() {
 
   
   function addNewAnimal(newAnimal) {
-    setAnimals([...animals, newAnimal]);
+    setAnimals([newAnimal, ...animals]);
   }
 
 

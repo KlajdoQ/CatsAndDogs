@@ -3,7 +3,7 @@ import CommentAndReplyForm from "./CommentAndReplyForm";
 import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
 
-export default function AddComment({ newMessage, setNewMessage, animal, setAnimals , setUser}) {
+export default function AddComment({ newMessage, setNewMessage, animal, setAnimals , setUser, handleClick}) {
 
   const [newComment, setnewComment] = useState("");
   const [showComment, setshowComment] = useState(false);
@@ -11,6 +11,7 @@ export default function AddComment({ newMessage, setNewMessage, animal, setAnima
   const [showReply, setShowReply] = useState(animal.comments ? Array(animal.comments.length).fill(false) : []);
   const [newReply, setNewReply] = useState(animal.comments ? Array(animal.comments.length).fill("") : []);
   const { user} = useContext(UserContext)
+  const [likedComments, setLikedComments] = useState([]);
 
   
   function handleCommentSubmit(event) {
@@ -62,8 +63,12 @@ export default function AddComment({ newMessage, setNewMessage, animal, setAnima
     });
   }
 
-  function likeComments() {
-    setLikeComment(prev => !prev)
+  function handleLikeComments(commentIndex) {
+    if (likedComments.includes(commentIndex)) {
+      setLikedComments(likedComments.filter((index) => index !== commentIndex));
+    } else {
+      setLikedComments([...likedComments, commentIndex]);
+    }
   }
   
   //function to assign the state change to the reply
@@ -146,8 +151,9 @@ export default function AddComment({ newMessage, setNewMessage, animal, setAnima
       handleCommentSubmit={handleCommentSubmit}
       animal={animal}
       setAnimals={setAnimals}
-      likeComments={likeComments}
       likeComment={likeComment}
+      likedComments={likedComments}
+      handleLikeComments={handleLikeComments}
       showCommentReplies={showCommentReplies}
       showReply={showReply}
       newReply={newReply}
@@ -160,6 +166,7 @@ export default function AddComment({ newMessage, setNewMessage, animal, setAnima
       setUser={setUser}
       newMessage={newMessage}
       setNewMessage={setNewMessage}
+      handleClick={handleClick}
     />
   );
 }
